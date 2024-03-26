@@ -11,7 +11,7 @@ def infer_gpt(topic, prompt_version=0):
         model = "",
         prompt = prompt,
         temperature = 0.6,
-    
+        
     
     )
   
