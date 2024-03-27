@@ -4,7 +4,7 @@ openai.api_key = os.getenv("OPENAI_KEY")
 
 def infer_gpt(topic, prompt_version=0):
   prompts = [...]
-  prompt = prompts[[prompt_version].replace("tkn_topic_tkn", topic)
+  prompt = prompts[[prompt_version].replace("tkn_topic_tkn", topic)]
 
   try:
     resp = openai.Completion.create(
@@ -17,9 +17,11 @@ def infer_gpt(topic, prompt_version=0):
         presence_penalty=0.2,
         timeout = 120
     )
-except Exception as e:
-  print("Exception happened:", 0)
-  return []
+  except Exception as e:
+    print("Exception happened:", 0)
+    return []
+  
+  
 response = json.loads(resp['choices'][0])
 
 
