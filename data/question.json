@@ -1,0 +1,34 @@
+[
+    {
+        "question": "How many meetings do I have scheduled in total?",
+        "answer": ""
+    },
+    {
+        "question": "How many events do I have scheduled for today?",
+        "answer": ""
+    },
+    {
+        "question": "How many attendees are there for the meeting with ID masbk72a24cb0a8k9c7jo0e9s6?",
+        "answer": ""
+    },
+    {
+        "question": "What is the longest meeting ID on my calendar?",
+        "answer": ""
+    },
+    {
+        "question": "List events with duration longer than 2 hours?",
+        "answer": ""
+    },
+    {
+        "question": "Find events with the status 'cancelled'?",
+        "answer": ""
+    },
+    {
+        "question": "What events are scheduled to start tomorrow?",
+        "answer": ""
+    },
+    {
+        "question": "What is the status and summary of the meeting with ID maeuv72w37ab0p6m8n7io4r3x6?",
+        "answer": ""
+    }   
+]
