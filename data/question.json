@@ -1,34 +1,42 @@
 [
     {
-        "question": "How many meetings do I have scheduled in total?",
-        "answer": ""
+        "question": "How many meetings do I have attended in total?",
+        "answer": 18
     },
     {
         "question": "How many events do I have scheduled for today?",
-        "answer": ""
+        "answer": 1
     },
     {
         "question": "How many attendees are there for the meeting with ID masbk72a24cb0a8k9c7jo0e9s6?",
-        "answer": ""
+        "answer": 2
     },
     {
         "question": "What is the longest meeting ID on my calendar?",
-        "answer": ""
+        "answer": "malrq85j74yb0m3n8j8ro2v5d9"
     },
     {
-        "question": "List events with duration longer than 2 hours?",
-        "answer": ""
+        "question": "How many events with duration longer than 1 hours?",
+        "answer": 6
     },
     {
-        "question": "Find events with the status 'cancelled'?",
-        "answer": ""
+        "question": "How many meeting were cancelled in total?",
+        "answer": 2
     },
     {
-        "question": "What events are scheduled to start tomorrow?",
-        "answer": ""
+        "question": "How many events are scheduled to start tomorrow?",
+        "answer": 0
     },
     {
-        "question": "What is the status and summary of the meeting with ID maeuv72w37ab0p6m8n7io4r3x6?",
-        "answer": ""
+        "question": "Do I have me with natalia tomorrow?",
+        "answer": "False"
+    },
+    {
+        "question": "How many meeting did I have yestaerday ?",
+        "answer": 0
+    },
+    {
+        "question": "How many meetings do I have for next 3 days?",
+        "answer": 0
     }   
 ]
