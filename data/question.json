@@ -28,8 +28,8 @@
         "answer": 0
     },
     {
-        "question": "Do I have me with natalia tomorrow?",
-        "answer": "False"
+        "question": "Do I have me with natalia tomorrow, True or False?",
+        "answer": "false"
     },
     {
         "question": "How many meeting did I have yestaerday ?",

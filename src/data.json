@@ -1,0 +1,62 @@
+[
+    {
+        "question": "How many meetings do I have attended in total?",
+        "generated_code": "import pandas as pd \n\ndef total_meetings(calendar_data):\n    # based on the logic that cancelled meetings won't be attended, we filtered out cancelled meetings\n    not_cancelled_meetings = calendar_data[calendar_data['status'] != 'cancelled']  \n    total_meetings_attended = not_cancelled_meetings.shape[0]\n    return total_meetings_attended\n\nanswer = total_meetings(calendar_data)\n",
+        "true_answer": 18,
+        "answer": "success"
+    },
+    {
+        "question": "How many events do I have scheduled for today?",
+        "generated_code": "import pandas as pd\nfrom datetime import datetime\n\ndef num_of_events_today(calendar_data):\n    # Convert the 'start' column to datetime datatype\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n\n    # Filter the dataframe to include the events of today\n    events_today = calendar_data[(calendar_data['start'].dt.date == datetime.now().date())]\n\n    return events_today.shape[0]\n\nanswer = num_of_events_today(calendar_data)\n",
+        "true_answer": 1,
+        "answer": "0"
+    },
+    {
+        "question": "How many attendees are there for the meeting with ID masbk72a24cb0a8k9c7jo0e9s6?",
+        "generated_code": "import pandas as pd \n\ndef num_attendees(calendar_data, id):\n    meeting = calendar_data[calendar_data['ID'] == id]\n    attendees = meeting['attendees'].iloc[0]\n    return len(attendees.split('\\n'))\n\nanswer = num_attendees(calendar_data, 'masbk72a24cb0a8k9c7jo0e9s6')\n",
+        "true_answer": 2,
+        "answer": "1"
+    },
+    {
+        "question": "What is the longest meeting ID on my calendar?",
+        "generated_code": "import pandas as pd \n\ndef query(calendar_data):\n    # Exclude cancelled meetings\n    calendar_data = calendar_data[calendar_data['status'] != 'cancelled']\n     \n    # Get the maximum duration\n    max_duration = calendar_data['duration'].max()\n\n    # Get the meeting ID that corresponds to the maximum duration\n    longest_meeting_id = calendar_data[calendar_data['duration'] == max_duration]['ID'].values[0]\n    \n    return longest_meeting_id\n\nanswer = query(calendar_data)\n",
+        "true_answer": "malrq85j74yb0m3n8j8ro2v5d9",
+        "answer": "success"
+    },
+    {
+        "question": "How many events with duration longer than 1 hours?",
+        "generated_code": "import pandas as pd \n\ndef query(calendar_data):\n    #convert duration from seconds to hours\n    calendar_data['duration'] = calendar_data['duration'] / 3600\n    # filter the data where duration is more than 1 hour\n    longer_than_1_hour = calendar_data[calendar_data['duration'] > 1]\n    #count the number of events\n    num_of_events = longer_than_1_hour['ID'].count()\n    return num_of_events\n\nanswer = query(calendar_data)\n",
+        "true_answer": 6,
+        "answer": "success"
+    },
+    {
+        "question": "How many meeting were cancelled in total?",
+        "generated_code": "import pandas as pd\n\ndef cancelled_meetings_count(calendar_data):\n    cancelled_meetings = calendar_data[calendar_data['status'] == 'cancelled']\n    return len(cancelled_meetings)\n\nanswer = cancelled_meetings_count(calendar_data)\n",
+        "true_answer": 2,
+        "answer": "success"
+    },
+    {
+        "question": "How many events are scheduled to start tomorrow?",
+        "generated_code": "import pandas as pd\nfrom datetime import datetime, timedelta\n\ndef query(calendar_data):\n    # Convert string to datetime format\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    # Define today's date\n    today = datetime.strptime('2024-03-28 18:02:30', '%Y-%m-%d %H:%M:%S')\n    # Define tomorrow's date\n    tomorrow = today + timedelta(days=1)\n    # Get count of all events starting tomorrow\n    events_tomorrow = calendar_data[(calendar_data['start'].dt.date == tomorrow.date()) & (calendar_data['status'] != 'cancelled')].shape[0]\n    return events_tomorrow\n\nanswer = query(calendar_data)\n",
+        "true_answer": 0,
+        "answer": "success"
+    },
+    {
+        "question": "Do I have me with natalia tomorrow, True or False?",
+        "generated_code": "import pandas as pd \ndef query(calendar_data):\n    # convert 'tomorrow' to actual date\n    today = pd.to_datetime('2024-03-28 18:02:30')\n    tomorrow = (today + pd.DateOffset(days=1)).date()\n\n    # convert start and end columns to datetime\n    calendar_data['start'] = pd.to_datetime(calendar_data['start']).dt.date\n    calendar_data['end'] = pd.to_datetime(calendar_data['end']).dt.date\n    \n    # filter meetings with 'natalia' tomorrow\n    meetings_with_natalia_tomorrow = calendar_data[(calendar_data['start'] <= tomorrow) & \n                                                   (calendar_data['end'] >= tomorrow) &\n                                                   (calendar_data['attendees'].str.contains('natalia')) &\n                                                   (calendar_data['status'] != 'cancelled')]\n    return not meetings_with_natalia_tomorrow.empty\n\nanswer = query(calendar_data)\n",
+        "true_answer": "false",
+        "answer": "False"
+    },
+    {
+        "question": "How many meeting did I have yestaerday ?",
+        "generated_code": "import pandas as pd \n\ndef meeting_yesterday(calendar_data):\n    # convert start and end columns to datetime\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    calendar_data['end'] = pd.to_datetime(calendar_data['end'])\n    \n    # get yesterday's date\n    today = pd.to_datetime('2024-03-28 18:02:30')\n    yesterday = today - pd.DateOffset(days=1)\n    \n    # filter out meetings that occured yesterday and are not cancelled\n    yesterday_meetings = calendar_data[(calendar_data['start'].dt.date == yesterday.date()) \n                                        & (calendar_data['status'] != 'cancelled')]\n    \n    return len(yesterday_meetings)\n\nanswer = meeting_yesterday(calendar_data)\n",
+        "true_answer": 0,
+        "answer": "success"
+    },
+    {
+        "question": "How many meetings do I have for next 3 days?",
+        "generated_code": "import pandas as pd\nfrom datetime import datetime, timedelta\n\ndef meetings_in_next_3_days(calendar_data):\n    # Convert the 'start' column to datetime\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    \n    # Get today's date and time\n    today = datetime.strptime('2024-03-28 18:02:30', '%Y-%m-%d %H:%M:%S')\n    \n    # Get the date and time for three days from today\n    three_days_later = today + timedelta(days=3)\n\n    # Filter the DataFrame to show only those rows where the start date is within the next 3 days\n    filtered_df = calendar_data[(calendar_data['start'] > today) & (calendar_data['start'] < three_days_later)]\n    \n    # Count the number of these rows (i.e. the number of meetings in the next 3 days)\n    num_meetings = len(filtered_df)\n    \n    return num_meetings\n\nanswer = meetings_in_next_3_days(calendar_data)\n",
+        "true_answer": 0,
+        "answer": "success"
+    }
+]
