@@ -9,6 +9,7 @@ import pandas as pd
 import argparse
 from openai import OpenAI
 from dotenv import load_dotenv
+from datetime import datetime
 
 
 def get_calendar_data(DATA_PATH):
@@ -56,7 +57,7 @@ def get_prompt(question):
 
     Question to be resolved: {text} 
     
-    Check the python code has one input: calendar_data and one output: answer. Today's date is '2024-03-12 13:02:30-03:20'.
+    Recheck the python code has one input: calendar_data and one output: answer. Today's date is '2024-03-28 13:02:30-03:20'.
     """
     
     return PROMPT
@@ -131,22 +132,22 @@ def main():
                     )
         python_code_list = re.findall(_python_code_re_pattern, llm_reply_with_code, re.DOTALL)
     
-        print(python_code_list[0])
+        print(f"""Thegenerated code is: \n {python_code_list[0]}""")
 
-        Vars = {}
-        
+        # answer = 1
+        exec_compiled_code = compile(python_code_list[0], '<string>', 'exec')
+        # exec(exec_compiled_code)
+
         try:
-            exec(python_code_list[0], globals(), locals())
-            answer = vars().get('answer')
-            # exec(python_code_list[0], {"calendar_data": calendar_data}, Vars)
-            # answer = Vars.get('answer')
-            # print(f"""The generated answer is {answer}""")
+            Vars = {}
+            exec(exec_compiled_code, {'calendar_data': calendar_data}, Vars)
+            answer = Vars.get('answer')
+            print(f"""The generated answer is {answer}""")
         except Exception as E:
             print(E)
             result['error'] += 1
             pass
         else:
-            # exec(python_code_list[0])
             print(f"""generated answer: {answer}""")
             if ground_true == answer:
                 result['success'] += 1
@@ -154,6 +155,8 @@ def main():
             else:   
                 result['wrong_answer'] += 1
                 print("wrong answer")
+        
+        
         
     # result = json.dumps(result)
     print(result)
