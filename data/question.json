@@ -24,12 +24,16 @@
         "answer": 2
     },
     {
-        "question": "How many events are scheduled to start tomorrow?",
+        "question": "How many events are scheduled today?",
+        "answer": 2
+    },
+    {
+        "question": "How many events are scheduled tomorrow?",
         "answer": 0
     },
     {
         "question": "Do I have me with natalia tomorrow, True or False?",
-        "answer": "false"
+        "answer": false
     },
     {
         "question": "How many meeting did I have yestaerday ?",
@@ -37,6 +41,146 @@
     },
     {
         "question": "How many meetings do I have for next 3 days?",
+        "answer": 2
+    },
+    {
+        "question": "What is the topic of my last meeting?",
+        "answer": "meeting topic: weekly progress review"
+    },
+    {
+        "question": "What is the topic of my next meeting?",
+        "answer": "Database Architecture "
+    },
+    {
+        "question": "What is the shortest meeting duration?",
+        "answer": 1200
+    },  
+    {
+        "question": "How many confirmed meetings are scheduled for tomorrow?",
         "answer": 0
-    }   
+    },
+    {
+        "question": "Who is the most frequent attendee in meetings?",
+        "answer": "walter@ninjatech.ai(accepted)"
+    },
+    {
+        "question": "What is the average meeting duration?",
+        "answer": 3660
+    },
+    {
+        "question": "What is my latest scheduled meeting for today? tell me meeting ID ",
+        "answer": "magdc98i96lb0n3m8j2uo7d6y4"
+    },
+    {
+        "question": "What is the total meeting duration for today?",
+        "answer": 7200
+    },
+    {
+        "question": "How many meetings that last more than 2 hours?",
+        "answer": 1
+    },
+    {
+        "question": "Do I have meeting in next 2 hours, True or False?",
+        "answer": true
+    },
+    {
+        "question": "Do I have meeting in today afternoon, True or False?",
+        "answer": true
+    },  
+    {
+        "question": "How many meetings do I have meeting in this afternoon?",
+        "answer": 1
+    },
+    {
+        "question": "How many meetings have more than 10 attendees?",
+        "answer": 0
+    },   
+    {
+        "question": "How many meetings were scheduled for last weekend?",
+        "answer": 0
+    },
+    {
+        "question": "How many meetings did I attended last week?",
+        "answer": 2
+    },
+    {
+        "question": "How many meetings did I attended last three days?",
+        "answer": 0
+    },
+    {
+        "question": "How many meetings do I have this tuesday?",
+        "answer":   2
+    },
+    {
+        "question": "Do I have meeting this tuesday, True or False?",
+        "answer": true
+    },
+    {
+        "question": "Do I have meeting tuesday morning this week, True or False?",
+        "answer": true
+    },
+    {
+        "question": "How many meetings do I have tuesday morning this week?",
+        "answer": 1
+    },
+    {
+        "question": "Do I have meeting this tuesday afternoon, True or False??",
+        "answer": true
+    },
+    {
+        "question": "How many meetings do I have in this tuesday afternoon?",
+        "answer": 1
+    },
+    {
+        "question": "Do I have meeting this weekend, True or False?",
+        "answer": true
+    },
+    {
+        "question": "How many meetings do I have this weekend?",
+        "answer": 1
+    },
+    {
+        "question": "How many meetings do I have this week in total?",
+        "answer": 4
+    },
+    {
+        "question": "Do I have meeting next weekend, True or False?",
+        "answer": false
+    },
+    {
+        "question": "How many meetings do I have next weekend?",
+        "answer": 0
+    },
+    {
+        "question": "How many meetings do I have this weekday?",
+        "answer": 3
+    },
+    {
+        "question": "Are there any meetings scheduled for Friday afternoon, True or False?",
+        "answer": true
+    },
+    {
+        "question": "What was the last meeting attended by natalia?, tell me the meeting ID",
+        "answer": "mipnc82k87hc1n4q9v10g1r9w9"
+    },
+    {
+        "question": "How many meetings which are yet to start this week?",
+        "answer": 4
+    },
+    {
+        "question": "Find the start time of next meeting?",
+        "answer": "2024-04-02 09:30:00-00:00"
+    },
+    {
+        "question": "Find the end time of next meeting?",
+        "answer": "2024-04-02 11:00:00-00:00"
+    },
+    {
+        "question": "Find the duration of meeting with id 'mahsm54f88qb0j5o8p3uo0a9v8'.?",
+        "answer": 3600
+    },
+    {
+        "question": "How many meetings got confirmed?",
+        "answer": 17
+    }
 ]

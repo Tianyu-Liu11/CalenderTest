@@ -35,7 +35,7 @@ def get_prompt(question, examples):
 
 
 
-def get_code_completion(MODEL, PROMPT):
+def get_completion(MODEL, PROMPT):
 
     client = OpenAI(
         # This is the default and can be omitted
@@ -58,6 +58,22 @@ def get_code_completion(MODEL, PROMPT):
 
 
 
+def get_result_prompt(question, result):
+    
+    task = f"""{question}
+    """
+
+    PROMPT = f"""You are provided two answers: true answer and AI generated answer. Compare two answers, 
+    if two answers are the same, return true; if two answers are different, return wrong;
+    If AI generated answer didn't provide clear answer, for example the generated answer includes 'can not be determined' return 'Not determined'
+    
+    The true answer: {result['true_answer']}; The generated answer: {result['generated_answer']}.
+    
+    The output only consists of 'true', 'false' and 'not determined'
+    """
+                        
+    return PROMPT
+
 
 
 
@@ -65,19 +81,17 @@ def main():
     # Add argparse and *karg
     
     DATA_PATH = "./data/"
-    MODEL = "gpt-4"
-    # MODEL = "gpt-3.5-turbo"
+    # MODEL = "gpt-4"
+    MODEL = "gpt-3.5-turbo"
     
     print(DATA_PATH + "calendar_data.csv")
     
     result = {'success': 0, 'wrong_answer': 0, 'error': 0}
-    generated_code_analysis = {'question': '', 
-                               'python_with_code': '',
-                               'answer': ''
+    question_answer_summary = {'question': '',
+                               'true_answer':'', 
+                               'generated_answer': ''
                                }
-    
-    # run()
-    # print('END')
+    result_list = []
     
     calendar_data = get_calendar_data(DATA_PATH=DATA_PATH)
     queston_answer_pairs = get_question(DATA_PATH=DATA_PATH)
@@ -85,31 +99,42 @@ def main():
     
     ground_true = []
     
-    for i in range(10):
-        # print(f"""question index {i} \n""")
-        print(f"""Question: {queston_answer_pairs[i]['question']}\n True answer: {queston_answer_pairs[i]['answer']}""")
-        
-        PROMPT = get_prompt(queston_answer_pairs[i]['question'], calendar_data_JSON)
-        
-        question = queston_answer_pairs[i]['question']
-        ground_true = (queston_answer_pairs[i]['answer'])
-        
-        llm_reply_with_code = get_code_completion(MODEL, PROMPT)
-        print(f"""The answer of LLM: {llm_reply_with_code}""")
-        
-        # # extract code from the output of LLM
-        # _python_code_re_pattern = "```python\n(.*?)```"
-        # llm_reply_without_code = re.sub(
-        #             _python_code_re_pattern, "", llm_reply_with_code, flags=re.DOTALL
-        #             )
-        # python_code_list = re.findall(_python_code_re_pattern, llm_reply_with_code, re.DOTALL)
-    
+    for q_a_pair in queston_answer_pairs:
 
+        # print(f"""Question: {q_a_pair['question']}\n True answer: {q_a_pair['answer']}""")
+        
+        PROMPT = get_prompt(q_a_pair['question'], calendar_data_JSON)
+        
+        # question = q_a_pair['question']
+        # ground_true = (q_a_pair['answer'])
+        
+        llm_reply = get_completion(MODEL, PROMPT)
+        # print(f"""The answer of LLM: {llm_reply}""")
+        
+        # result analysis
+        question_answer_summary['question'] = q_a_pair['question']
+        question_answer_summary['true_answer'] = q_a_pair['answer']
+        question_answer_summary['generated_code'] = llm_reply
     
+        result_list.append(question_answer_summary.copy())
+ 
+ 
+ 
+ 
+#  
+
+     
+    for result in result_list:
+        PROMPT_for_analysis = get_result_prompt(q_a_pair['question'], question_answer_summary)
+        llm_result_analysis = get_completion(MODEL, PROMPT_for_analysis)
+        print(llm_result_analysis)
+        
+         
         
     # result = json.dumps(result)
-    print(result)
-        # save the code and result into .json 
+    print('End')
+    # print(result)
+    # save the code and result into .json 
 
     # result = {'success': 0, 'wrong_answer': 0, 'error': 0}
     # generated_code_analysis = {'question': '', 
@@ -118,18 +143,6 @@ def main():
     #                            }
 
 
-    # for code, queston_answer_pair in (python_code_list, queston_answer_pairs):
-    #     try:
-    #         exec(code)
-            
-    #         try:
-    #             answer # get from python code
-    #         except NameError:
-                 
-    #     except:
-    #         # 
-    #         print()
-    #         pass
         
         
 

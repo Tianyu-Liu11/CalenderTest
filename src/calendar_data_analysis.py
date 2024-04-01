@@ -45,7 +45,7 @@ def get_prompt(question):
     <your code here>
     ```
 
-    The only input of the code is dataframe - calendar_data, and the result is stored in answer
+    The only input of the code is dataframe - calendar_data, and the result is stored in answer.
 
     For example, the output have the following format:
     ```
@@ -54,10 +54,11 @@ def get_prompt(question):
         return calendar_data[0]
     answer = query(calendar_data)
     ```
+    
+    Recheck the python code has one input: calendar_data and one output: answer. 
+    Today's date is '2024-04-02 09:02:30', date format: %Y-%m-%d %H:%M:%S.
 
     Question to be resolved: {text} 
-    
-    Recheck the python code has one input: calendar_data and one output: answer. Today's date is '2024-03-28 13:02:30-03:20'.
     """
     
     return PROMPT
@@ -169,18 +170,6 @@ def main():
     #                            }
 
 
-    # for code, queston_answer_pair in (python_code_list, queston_answer_pairs):
-    #     try:
-    #         exec(code)
-            
-    #         try:
-    #             answer # get from python code
-    #         except NameError:
-                 
-    #     except:
-    #         # 
-    #         print()
-    #         pass
         
         
 
