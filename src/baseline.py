@@ -37,10 +37,12 @@ def get_prompt(question, examples):
 
 def get_completion(MODEL, PROMPT):
 
-    client = OpenAI(
-        # This is the default and can be omitted
-        api_key=os.environ.get("OPENAI_API_KEY"),
-    )
+    if MODEL == "gpt-4":
+        client = OpenAI()
+    else:
+        client = OpenAI(
+            api_key=os.environ.get("OPENAI_API_KEY"),
+        )
 
     chat_completion = client.chat.completions.create(
         messages=[
