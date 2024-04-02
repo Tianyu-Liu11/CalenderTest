@@ -1,0 +1,278 @@
+[
+    {
+        "question": "How many meetings do I have attended in total?",
+        "true_answer": 18,
+        "generated_answer": "",
+        "generated_code": "The total number of meetings attended cannot be determined from the provided JSON file as the 'status' field contains terms like 'tentative', 'confirmed' and 'cancelled', which does not directly indicate whether the meeting was attended or not. Further information or clarification is needed to determine the actual number of meetings attended."
+    },
+    {
+        "question": "How many events do I have scheduled for today?",
+        "true_answer": 1,
+        "generated_answer": "",
+        "generated_code": "The JSON file does not provide information about today's date, so it is impossible to determine the number of events scheduled for today."
+    },
+    {
+        "question": "How many attendees are there for the meeting with ID masbk72a24cb0a8k9c7jo0e9s6?",
+        "true_answer": 2,
+        "generated_answer": "",
+        "generated_code": "The meeting with ID \"masbk72a24cb0a8k9c7jo0e9s6\" has two attendees: walter@ninjatech.ai and salesteam@ninjatech.ai."
+    },
+    {
+        "question": "What is the longest meeting ID on my calendar?",
+        "true_answer": "malrq85j74yb0m3n8j8ro2v5d9",
+        "generated_answer": "",
+        "generated_code": "The longest meeting ID on the calendar is \"lokdi73l78id2o5r10w11h2s10u\"."
+    },
+    {
+        "question": "How many events with duration longer than 1 hours?",
+        "true_answer": 6,
+        "generated_answer": "",
+        "generated_code": "The number of events with a duration longer than 1 hour (3600 seconds) is 7."
+    },
+    {
+        "question": "How many meeting were cancelled in total?",
+        "true_answer": 2,
+        "generated_answer": "",
+        "generated_code": "The total number of meetings that were cancelled are 2."
+    },
+    {
+        "question": "How many events are scheduled today?",
+        "true_answer": 2,
+        "generated_answer": "",
+        "generated_code": "The JSON does not specify today's date. Without today's date, it is not possible to determine how many events are scheduled for today."
+    },
+    {
+        "question": "How many events are scheduled tomorrow?",
+        "true_answer": 0,
+        "generated_answer": "",
+        "generated_code": "The JSON file displayed does not provide information about events scheduled for tomorrow. Therefore, it is impossible to determine the number of events scheduled for tomorrow using this specific JSON file."
+    },
+    {
+        "question": "Do I have me with natalia tomorrow, True or False?",
+        "true_answer": false,
+        "generated_answer": "",
+        "generated_code": "False"
+    },
+    {
+        "question": "How many meeting did I have yestaerday ?",
+        "true_answer": 0,
+        "generated_answer": "",
+        "generated_code": "The JSON file doesn't provide information about the date \"yesterday\". Therefore, it's not possible to determine how many meetings you had yesterday based on the JSON file provided."
+    },
+    {
+        "question": "How many meetings do I have for next 3 days?",
+        "true_answer": 2,
+        "generated_answer": "",
+        "generated_code": "The JSON file does not provide any data about meetings for the next 3 days from the current date. We would need a JSON file with dates closer to the current date to answer this question."
+    },
+    {
+        "question": "What is the topic of my last meeting?",
+        "true_answer": "meeting topic: weekly progress review",
+        "generated_answer": "",
+        "generated_code": "The topic of your last meeting is \"API Integration.\""
+    },
+    {
+        "question": "What is the topic of my next meeting?",
+        "true_answer": "Database Architecture ",
+        "generated_answer": "",
+        "generated_code": "The topic of your next meeting is \"Topic: Job Application Discussion\"."
+    },
+    {
+        "question": "What is the shortest meeting duration?",
+        "true_answer": 1200,
+        "generated_answer": "",
+        "generated_code": "The shortest meeting duration is 1200 seconds."
+    },
+    {
+        "question": "How many confirmed meetings are scheduled for tomorrow?",
+        "true_answer": 0,
+        "generated_answer": "",
+        "generated_code": "The JSON file does not provide information about the date 'tomorrow'. Therefore, it is not possible to determine how many confirmed meetings are scheduled for tomorrow based on this JSON file. This type of question can be answered if the 'start' attribute in the JSON data includes the date for tomorrow."
+    },
+    {
+        "question": "Who is the most frequent attendee in meetings?",
+        "true_answer": "walter@ninjatech.ai(accepted)",
+        "generated_answer": "",
+        "generated_code": "The most frequent attendee in meetings is walter@ninjatech.ai."
+    },
+    {
+        "question": "What is the average meeting duration?",
+        "true_answer": 3660,
+        "generated_answer": "",
+        "generated_code": "The average meeting duration can be calculated by adding the duration of each meeting and dividing by the total number of meetings. \n\nIn the given JSON file, the duration field indicates the duration of each meeting in seconds. \n\nHere are the durations of all the meetings: [5400, 5400, 1800, 1800, 3600, 3600, 5400, 1200, 1800, 3600, 1800, 1800, 7200, 1800, 3600, 1800, 5400, 1800, 10800, 3600].\n\nTo calculate,\n\nAverage meeting duration = (sum of all durations) / (total number of durations)\n\nThe exact calculation cannot be performed here as the JSON data provided is in text form and cannot be processed with mathematical operations directly. \n\nHowever, performing these operations programmatically based on the given JSON data can give the desired result."
+    },
+    {
+        "question": "What is my latest scheduled meeting for today? tell me meeting ID ",
+        "true_answer": "magdc98i96lb0n3m8j2uo7d6y4",
+        "generated_answer": "",
+        "generated_code": "Your latest scheduled meeting for today is API Integration and the meeting id is mahsm54f88qb0j5o8p3uo0a9v8."
+    },
+    {
+        "question": "What is the total meeting duration for today?",
+        "true_answer": 7200,
+        "generated_answer": "",
+        "generated_code": "The JSON data doesn't provide information about today's date, so the total meeting duration for today can't be determined from this data."
+    },
+    {
+        "question": "How many meetings that last more than 2 hours?",
+        "true_answer": 1,
+        "generated_answer": "",
+        "generated_code": "The duration of each meeting is given in seconds. For a meeting to last more than 2 hours, it would have to be more than 7200 seconds in duration. From the given JSON file, there are 3 meetings that last more than 2 hours - these are the meetings with ID \"mipnc82k87hc1n4q9v10g1r9w9\", \"mambf90j96gb0m3p8u9fo0q7v8\" and \"mahsm54f88qb0j5o8p3uo0a9v8\"."
+    },
+    {
+        "question": "Do I have meeting in next 2 hours, True or False?",
+        "true_answer": true,
+        "generated_answer": "",
+        "generated_code": "Without the current date and time, it's impossible to answer this question."
+    },
+    {
+        "question": "Do I have meeting in today afternoon, True or False?",
+        "true_answer": true,
+        "generated_answer": "",
+        "generated_code": "False"
+    },
+    {
+        "question": "How many meetings do I have meeting in this afternoon?",
+        "true_answer": 1,
+        "generated_answer": "",
+        "generated_code": "Based on the provided JSON file, which includes information about the status and the starting and ending times of the meetings, the meetings that are set for this afternoon are those with a starting time after 12:00 and before 18:00.\n\nLooking at the data, the following meetings are set for this afternoon:\n\n1. \"Contract Negotiation\" scheduled for 14:00\n2. \"Meeting about Project Overview\" scheduled for 14:00\n3. \"Software Development Planning\" scheduled for 14:00\n4. \"Agile Methodology Training\" scheduled for 14:00\n5. \"Weekly Team Meeting\" scheduled for 14:00\n6. \"Agile Development Workflow\" scheduled for 14:00\n7. \"Research Planning\" scheduled for 14:00\n8. \"Weekly Progress Review\" scheduled for 14:00\n9. \"Security Best Practices\" scheduled for 14:00\n10. \"UI/UX Design\" scheduled for 15:00 \n11. \"API Integration\" scheduled for 15:00 \n\nHowever, two meetings \u201cSoftware Development Planning\u201d and \u201cTeam Introduction\u201d have been cancelled.\n\nSo, in total for this afternoon, you have 9 confirmed meetings."
+    },
+    {
+        "question": "How many meetings have more than 10 attendees?",
+        "true_answer": 0,
+        "generated_answer": "",
+        "generated_code": "The JSON file does not provide information on how many attendees each meeting has, so it is impossible to determine how many meetings have more than 10 attendees based on the provided data."
+    },
+    {
+        "question": "How many meetings were scheduled for last weekend?",
+        "true_answer": 0,
+        "generated_answer": "",
+        "generated_code": "The JSON file does not provide information on which meetings were scheduled for last weekend."
+    },
+    {
+        "question": "How many meetings did I attended last week?",
+        "true_answer": 2,
+        "generated_answer": "",
+        "generated_code": "The JSON file does not provide information on when last week was, and therefore it's impossible to determine the number of meetings attended last week."
+    },
+    {
+        "question": "How many meetings did I attended last three days?",
+        "true_answer": 0,
+        "generated_answer": "",
+        "generated_code": "The JSON file doesn't provide the information required to answer the question. It doesn't specify which meetings were attended during the last three days."
+    },
+    {
+        "question": "How many meetings do I have this tuesday?",
+        "true_answer": 2,
+        "generated_answer": "",
+        "generated_code": "The JSON file does not provide specific information about which day of the week each date corresponds to. Therefore, it's impossible to determine how many meetings are scheduled for this Tuesday based off of this JSON file. In a programmatic context, this would be handled by converting the date strings to date objects and then checking the day of the week for each one, but in this scenario, we cannot execute such operation."
+    },
+    {
+        "question": "Do I have meeting this tuesday, True or False?",
+        "true_answer": true,
+        "generated_answer": "",
+        "generated_code": "The JSON file does not specify the dates in a format that identifies which day of the week a meeting occurs, therefore it is not possible to determine from this data if there is a meeting this Tuesday."
+    },
+    {
+        "question": "Do I have meeting tuesday morning this week, True or False?",
+        "true_answer": true,
+        "generated_answer": "",
+        "generated_code": "False"
+    },
+    {
+        "question": "How many meetings do I have tuesday morning this week?",
+        "true_answer": 1,
+        "generated_answer": "",
+        "generated_code": "Based on the provided JSON file with a Google Calendar agenda, there are no meetings on Tuesday morning this week."
+    },
+    {
+        "question": "Do I have meeting this tuesday afternoon, True or False??",
+        "true_answer": true,
+        "generated_answer": "",
+        "generated_code": "False"
+    },
+    {
+        "question": "How many meetings do I have in this tuesday afternoon?",
+        "true_answer": 1,
+        "generated_answer": "",
+        "generated_code": "The JSON file shows that you have 3 meetings on the afternoon of a Tuesday - on 2024-02-05, 2024-02-05, and 2024-03-05."
+    },
+    {
+        "question": "Do I have meeting this weekend, True or False?",
+        "true_answer": true,
+        "generated_answer": "",
+        "generated_code": "False"
+    },
+    {
+        "question": "How many meetings do I have this weekend?",
+        "true_answer": 1,
+        "generated_answer": "",
+        "generated_code": "The JSON file does not provide information about the specific dates for the weekend in question, making it impossible to determine the number of meetings scheduled for that weekend."
+    },
+    {
+        "question": "How many meetings do I have this week in total?",
+        "true_answer": 4,
+        "generated_answer": "",
+        "generated_code": "The JSON file does not provide information about this current week's meetings. However, by examining the \"start\" and \"status\" fields, the number of meetings for a week can theoretically be calculated if this week's date range is known. The information can't be provided purely based on the provided JSON content."
+    },
+    {
+        "question": "Do I have meeting next weekend, True or False?",
+        "true_answer": false,
+        "generated_answer": "",
+        "generated_code": "False"
+    },
+    {
+        "question": "How many meetings do I have next weekend?",
+        "true_answer": 0,
+        "generated_answer": "",
+        "generated_code": "The JSON file does not provide information on what the 'next weekend' is. It contains agenda dates for 2024, Please provide the exact dates for the 'next weekend'."
+    },
+    {
+        "question": "How many meetings do I have this weekday?",
+        "true_answer": 3,
+        "generated_answer": "",
+        "generated_code": "The JSON file doesn't provide a specific weekday information on the current day. This question cannot be answered without more context or specification on 'this weekday'."
+    },
+    {
+        "question": "Are there any meetings scheduled for Friday afternoon, True or False?",
+        "true_answer": true,
+        "generated_answer": "",
+        "generated_code": "True"
+    },
+    {
+        "question": "What was the last meeting attended by natalia?, tell me the meeting ID",
+        "true_answer": "mipnc82k87hc1n4q9v10g1r9w9",
+        "generated_answer": "",
+        "generated_code": "The last meeting attended by Natalia is \"Topic: Job Application Discussion\" and the meeting ID is \"mambf90j96gb0m3p8u9fo0q7v8\"."
+    },
+    {
+        "question": "How many meetings which are yet to start this week?",
+        "true_answer": 4,
+        "generated_answer": "",
+        "generated_code": "The JSON data provided does not give the current date. Hence, it's impossible to determine how many meetings are yet to start this week because we don't know what the current week is."
+    },
+    {
+        "question": "Find the start time of next meeting?",
+        "true_answer": "2024-04-02 09:30:00-00:00",
+        "generated_answer": "",
+        "generated_code": "The start time of the next meeting is \"2024-02-02 09:00:00-00:00\"."
+    },
+    {
+        "question": "Find the end time of next meeting?",
+        "true_answer": "2024-04-02 11:00:00-00:00",
+        "generated_answer": "",
+        "generated_code": "The end time of the next meeting is \"2024-02-02 10:30:00-00:00\"."
+    },
+    {
+        "question": "Find the duration of meeting with id 'mahsm54f88qb0j5o8p3uo0a9v8'.?",
+        "true_answer": 3600,
+        "generated_answer": "",
+        "generated_code": "The duration of the meeting with id 'mahsm54f88qb0j5o8p3uo0a9v8' is 3600 seconds."
+    },
+    {
+        "question": "How many meetings got confirmed?",
+        "true_answer": 17,
+        "generated_answer": "",
+        "generated_code": "The number of meetings that got confirmed is 18."
+    }
+]

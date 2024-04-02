@@ -156,8 +156,12 @@
         "answer": 3
     },
     {
-        "question": "Are there any meetings scheduled for Friday afternoon, True or False?",
+        "question": "Are there any meetings scheduled for this Friday afternoon, True or False?",
         "answer": true
+    },
+    {
+        "question": "How many meetings do I have this Friday afternoon?",
+        "answer": 1
     },
     {
         "question": "What was the last meeting attended by natalia?, tell me the meeting ID",
