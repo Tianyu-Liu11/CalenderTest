@@ -1,62 +1,284 @@
 [
     {
         "question": "How many meetings do I have attended in total?",
-        "generated_code": "import pandas as pd \n\ndef total_meetings(calendar_data):\n    # based on the logic that cancelled meetings won't be attended, we filtered out cancelled meetings\n    not_cancelled_meetings = calendar_data[calendar_data['status'] != 'cancelled']  \n    total_meetings_attended = not_cancelled_meetings.shape[0]\n    return total_meetings_attended\n\nanswer = total_meetings(calendar_data)\n",
+        "generated_code": "import pandas as pd\nfrom datetime import datetime\n\ndef count_attended_meetings(calendar_data):\n    today_date = '2024-04-02 09:02:30'\n    today_date = datetime.strptime(today_date, '%Y-%m-%d %H:%M:%S')\n    \n    total_attended_meetings = 0\n    for index, row in calendar_data.iterrows():\n        end_date = datetime.strptime(row['end'][:-6], '%Y-%m-%d %H:%M:%S')\n        if row['status'] != 'cancelled' and end_date < today_date and 'your_name' in row['attendees']:\n            total_attended_meetings += 1\n    \n    return total_attended_meetings\n\nanswer = count_attended_meetings(calendar_data)\n",
         "true_answer": 18,
-        "answer": "success"
-    },
-    {
-        "question": "How many events do I have scheduled for today?",
-        "generated_code": "import pandas as pd\nfrom datetime import datetime\n\ndef num_of_events_today(calendar_data):\n    # Convert the 'start' column to datetime datatype\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n\n    # Filter the dataframe to include the events of today\n    events_today = calendar_data[(calendar_data['start'].dt.date == datetime.now().date())]\n\n    return events_today.shape[0]\n\nanswer = num_of_events_today(calendar_data)\n",
-        "true_answer": 1,
         "answer": "0"
     },
     {
+        "question": "How many events do I have scheduled for today?",
+        "generated_code": "import pandas as pd\n\ndef query_num_events_today(calendar_data):\n    today = pd.Timestamp('2024-04-02').date()\n    num_events = calendar_data[(calendar_data['start'].dt.date == today) | (calendar_data['end'].dt.date == today)].shape[0]\n    return num_events\n\nnum_events_today = query_num_events_today(calendar_data)\n",
+        "true_answer": 1,
+        "answer": "AttributeError('Can only use .dt accessor with datetimelike values')"
+    },
+    {
         "question": "How many attendees are there for the meeting with ID masbk72a24cb0a8k9c7jo0e9s6?",
-        "generated_code": "import pandas as pd \n\ndef num_attendees(calendar_data, id):\n    meeting = calendar_data[calendar_data['ID'] == id]\n    attendees = meeting['attendees'].iloc[0]\n    return len(attendees.split('\\n'))\n\nanswer = num_attendees(calendar_data, 'masbk72a24cb0a8k9c7jo0e9s6')\n",
+        "generated_code": "import pandas as pd\n\ndef query_attendees_count(calendar_data, meeting_id):\n    meeting = calendar_data[calendar_data['ID'] == meeting_id]\n    if not meeting.empty:\n        return len(meeting['attendees'].str.split('\\n')[0])\n    else:\n        return \"Meeting ID not found.\"\n\nanswer = query_attendees_count(calendar_data, 'masbk72a24cb0a8k9c7jo0e9s6')\n",
         "true_answer": 2,
-        "answer": "1"
+        "answer": "KeyError(0)"
     },
     {
         "question": "What is the longest meeting ID on my calendar?",
-        "generated_code": "import pandas as pd \n\ndef query(calendar_data):\n    # Exclude cancelled meetings\n    calendar_data = calendar_data[calendar_data['status'] != 'cancelled']\n     \n    # Get the maximum duration\n    max_duration = calendar_data['duration'].max()\n\n    # Get the meeting ID that corresponds to the maximum duration\n    longest_meeting_id = calendar_data[calendar_data['duration'] == max_duration]['ID'].values[0]\n    \n    return longest_meeting_id\n\nanswer = query(calendar_data)\n",
+        "generated_code": "import pandas as pd\n\ndef find_longest_meeting(calendar_data):\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    calendar_data['end'] = pd.to_datetime(calendar_data['end'])\n    calendar_data['duration'] = (calendar_data['end'] - calendar_data['start']).dt.total_seconds()\n    \n    longest_meeting_id = calendar_data.loc[calendar_data['duration'].idxmax()]['ID']\n    return longest_meeting_id\n\nanswer = find_longest_meeting(calendar_data)\n",
         "true_answer": "malrq85j74yb0m3n8j8ro2v5d9",
         "answer": "success"
     },
     {
         "question": "How many events with duration longer than 1 hours?",
-        "generated_code": "import pandas as pd \n\ndef query(calendar_data):\n    #convert duration from seconds to hours\n    calendar_data['duration'] = calendar_data['duration'] / 3600\n    # filter the data where duration is more than 1 hour\n    longer_than_1_hour = calendar_data[calendar_data['duration'] > 1]\n    #count the number of events\n    num_of_events = longer_than_1_hour['ID'].count()\n    return num_of_events\n\nanswer = query(calendar_data)\n",
+        "generated_code": "import pandas as pd\n\ndef count_long_events(calendar_data):\n    # Convert 'start' and 'end' columns to datetime format\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    calendar_data['end'] = pd.to_datetime(calendar_data['end'])\n\n    # Calculate the duration of each event in hours\n    calendar_data['duration_hours'] = (calendar_data['end'] - calendar_data['start']).dt.total_seconds() / 3600\n\n    # Count the number of events with duration longer than 1 hour\n    total_long_events = calendar_data[calendar_data['duration_hours'] > 1].shape[0]\n\n    return total_long_events\n\n# Sample usage\nanswer = count_long_events(calendar_data)\n",
         "true_answer": 6,
         "answer": "success"
     },
     {
         "question": "How many meeting were cancelled in total?",
-        "generated_code": "import pandas as pd\n\ndef cancelled_meetings_count(calendar_data):\n    cancelled_meetings = calendar_data[calendar_data['status'] == 'cancelled']\n    return len(cancelled_meetings)\n\nanswer = cancelled_meetings_count(calendar_data)\n",
+        "generated_code": "import pandas as pd\n\ndef count_cancelled_meetings(calendar_data):\n    # Filter the dataframe to include only cancelled meetings\n    cancelled_meetings = calendar_data[calendar_data['status'] == 'cancelled']\n    \n    # Count the number of cancelled meetings\n    count_cancelled = cancelled_meetings.shape[0]\n    \n    return count_cancelled\n\n# Example of how to use the function with the calendar_data dataframe\nanswer = count_cancelled_meetings(calendar_data)\n",
         "true_answer": 2,
         "answer": "success"
     },
     {
-        "question": "How many events are scheduled to start tomorrow?",
-        "generated_code": "import pandas as pd\nfrom datetime import datetime, timedelta\n\ndef query(calendar_data):\n    # Convert string to datetime format\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    # Define today's date\n    today = datetime.strptime('2024-03-28 18:02:30', '%Y-%m-%d %H:%M:%S')\n    # Define tomorrow's date\n    tomorrow = today + timedelta(days=1)\n    # Get count of all events starting tomorrow\n    events_tomorrow = calendar_data[(calendar_data['start'].dt.date == tomorrow.date()) & (calendar_data['status'] != 'cancelled')].shape[0]\n    return events_tomorrow\n\nanswer = query(calendar_data)\n",
+        "question": "How many events are scheduled today?",
+        "generated_code": "import pandas as pd\n\ndef query(calendar_data):\n    today_date = '2024-04-02'\n    events_today = calendar_data[(calendar_data['start'].dt.date == today_date)]\n    return len(events_today)\n\nanswer = query(calendar_data)\n",
+        "true_answer": 2,
+        "answer": "0"
+    },
+    {
+        "question": "How many events are scheduled tomorrow?",
+        "generated_code": "import pandas as pd\n\ndef events_scheduled_tomorrow(calendar_data):\n    today = pd.to_datetime('2024-04-02 09:02:30')\n    tomorrow = today + pd.DateOffset(days=1)\n    tomorrow_events = calendar_data[(calendar_data['start'].dt.date == tomorrow.date())]\n    \n    return len(tomorrow_events)\n\nnum_events_tomorrow = events_scheduled_tomorrow(calendar_data)\n",
         "true_answer": 0,
         "answer": "success"
     },
     {
         "question": "Do I have me with natalia tomorrow, True or False?",
-        "generated_code": "import pandas as pd \ndef query(calendar_data):\n    # convert 'tomorrow' to actual date\n    today = pd.to_datetime('2024-03-28 18:02:30')\n    tomorrow = (today + pd.DateOffset(days=1)).date()\n\n    # convert start and end columns to datetime\n    calendar_data['start'] = pd.to_datetime(calendar_data['start']).dt.date\n    calendar_data['end'] = pd.to_datetime(calendar_data['end']).dt.date\n    \n    # filter meetings with 'natalia' tomorrow\n    meetings_with_natalia_tomorrow = calendar_data[(calendar_data['start'] <= tomorrow) & \n                                                   (calendar_data['end'] >= tomorrow) &\n                                                   (calendar_data['attendees'].str.contains('natalia')) &\n                                                   (calendar_data['status'] != 'cancelled')]\n    return not meetings_with_natalia_tomorrow.empty\n\nanswer = query(calendar_data)\n",
-        "true_answer": "false",
-        "answer": "False"
+        "generated_code": "import pandas as pd\n\ndef have_meeting_tomorrow(calendar_data):\n    today = pd.to_datetime('2024-04-02 09:02:30')\n    tomorrow = today + pd.DateOffset(days=1)\n\n    tomorrow_meetings = calendar_data[(calendar_data['start'].dt.date == tomorrow.date()) & calendar_data['attendees'].str.contains('natalia')]\n\n    return not tomorrow_meetings.empty\n\nanswer = have_meeting_tomorrow(calendar_data)\n",
+        "true_answer": false,
+        "answer": "success"
     },
     {
         "question": "How many meeting did I have yestaerday ?",
-        "generated_code": "import pandas as pd \n\ndef meeting_yesterday(calendar_data):\n    # convert start and end columns to datetime\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    calendar_data['end'] = pd.to_datetime(calendar_data['end'])\n    \n    # get yesterday's date\n    today = pd.to_datetime('2024-03-28 18:02:30')\n    yesterday = today - pd.DateOffset(days=1)\n    \n    # filter out meetings that occured yesterday and are not cancelled\n    yesterday_meetings = calendar_data[(calendar_data['start'].dt.date == yesterday.date()) \n                                        & (calendar_data['status'] != 'cancelled')]\n    \n    return len(yesterday_meetings)\n\nanswer = meeting_yesterday(calendar_data)\n",
+        "generated_code": "import pandas as pd\n\ndef query(calendar_data):\n    today = pd.to_datetime('2024-04-02 00:00:00', format='%Y-%m-%d %H:%M:%S')\n    yesterday = today - pd.DateOffset(days=1)\n\n    meetings_yesterday = calendar_data[(calendar_data['start'] >= yesterday) & (calendar_data['start'] < today)]\n    \n    return len(meetings_yesterday)\n\nanswer = query(calendar_data)\n",
+        "true_answer": 0,
+        "answer": "TypeError('Invalid comparison between dtype=datetime64[ns, UTC] and Timestamp')"
+    },
+    {
+        "question": "How many meetings do I have for next 3 days?",
+        "generated_code": "import pandas as pd\n\ndef query(calendar_data):\n    today_date = pd.Timestamp('2024-04-02 09:02:30')\n    three_days_later = today_date + pd.DateOffset(days=3)\n    meetings_within_3_days = calendar_data[(calendar_data['start'] >= today_date) & (calendar_data['start'] < three_days_later)]\n    return len(meetings_within_3_days)\n\nanswer = query(calendar_data)\n",
+        "true_answer": 2,
+        "answer": "TypeError('Invalid comparison between dtype=datetime64[ns, UTC] and Timestamp')"
+    },
+    {
+        "question": "What is the topic of my last meeting?",
+        "generated_code": "import pandas as pd\n\ndef get_last_meeting_topic(calendar_data):\n    # Convert start column to datetime format\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    \n    # Sort the dataframe by start date in descending order to get the last meeting\n    calendar_data = calendar_data.sort_values('start', ascending=False)\n    \n    # Get the topic of the last meeting\n    last_meeting_topic = calendar_data.iloc[0]['summary']\n    \n    return last_meeting_topic\n\n# Assuming the calendar_data dataframe has already been loaded with the calendar dataset\nanswer = get_last_meeting_topic(calendar_data)\n",
+        "true_answer": "meeting topic: weekly progress review",
+        "answer": "'API Integration'"
+    },
+    {
+        "question": "What is the topic of my next meeting?",
+        "generated_code": "import pandas as pd\n\n# Function to query the next meeting topic\ndef next_meeting_topic(calendar_data, current_date):\n    # Convert start date to datetime format\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    # Filter out meetings that are confirmed and have start date after current date\n    filtered_data = calendar_data[(calendar_data['status'] == 'confirmed') & (calendar_data['start'] > current_date)]\n    # Sort the filtered data by start date in ascending order\n    sorted_data = filtered_data.sort_values('start')\n    # Get the topic of the next meeting\n    next_meeting_topic = sorted_data.iloc[0]['summary']\n    return next_meeting_topic\n\ncurrent_date = '2024-04-02 09:02:30'\nanswer = next_meeting_topic(calendar_data, current_date)\n",
+        "true_answer": "Database Architecture ",
+        "answer": "success"
+    },
+    {
+        "question": "What is the shortest meeting duration?",
+        "generated_code": "import pandas as pd \n\ndef shortest_meeting_duration(calendar_data):\n    # Convert 'start' and 'end' columns to datetime format\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    calendar_data['end'] = pd.to_datetime(calendar_data['end'])\n    \n    # Calculate the meeting duration for each meeting\n    calendar_data['meeting_duration'] = (calendar_data['end'] - calendar_data['start']).dt.total_seconds()\n    \n    # Find the meeting with the shortest duration\n    shortest_duration = calendar_data.loc[calendar_data['meeting_duration'].idxmin()]\n    \n    return shortest_duration\n\nshortest_meeting = shortest_meeting_duration(calendar_data)\n",
+        "true_answer": 1200,
+        "answer": "'Database Architecture '"
+    },
+    {
+        "question": "How many confirmed meetings are scheduled for tomorrow?",
+        "generated_code": "import pandas as pd\nfrom datetime import datetime, timedelta\n\ndef count_confirmed_meetings_tomorrow(calendar_data):\n    today = datetime.strptime('2024-04-02', '%Y-%m-%d')\n    tomorrow = today + timedelta(days=1)\n    \n    tomorrow_date = tomorrow.strftime('%Y-%m-%d')\n    tomorrow_meetings = calendar_data[(calendar_data['start'].dt.date == tomorrow_date) & (calendar_data['status'] == 'confirmed')]\n    \n    return len(tomorrow_meetings)\n\nanswer = count_confirmed_meetings_tomorrow(calendar_data)\n",
         "true_answer": 0,
         "answer": "success"
     },
     {
-        "question": "How many meetings do I have for next 3 days?",
-        "generated_code": "import pandas as pd\nfrom datetime import datetime, timedelta\n\ndef meetings_in_next_3_days(calendar_data):\n    # Convert the 'start' column to datetime\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    \n    # Get today's date and time\n    today = datetime.strptime('2024-03-28 18:02:30', '%Y-%m-%d %H:%M:%S')\n    \n    # Get the date and time for three days from today\n    three_days_later = today + timedelta(days=3)\n\n    # Filter the DataFrame to show only those rows where the start date is within the next 3 days\n    filtered_df = calendar_data[(calendar_data['start'] > today) & (calendar_data['start'] < three_days_later)]\n    \n    # Count the number of these rows (i.e. the number of meetings in the next 3 days)\n    num_meetings = len(filtered_df)\n    \n    return num_meetings\n\nanswer = meetings_in_next_3_days(calendar_data)\n",
-        "true_answer": 0,
+        "question": "Who is the most frequent attendee in meetings?",
+        "generated_code": "import pandas as pd\n\ndef most_frequent_attendee(calendar_data):\n    # Create a list to store all attendees\n    all_attendees = []\n    \n    # Split the attendees column into a list of attendees for each meeting\n    calendar_data['attendees'] = calendar_data['attendees'].apply(lambda x: x.split('\\n'))\n    \n    # Iterate through the attendees list and append each attendee to the all_attendees list\n    for attendees_list in calendar_data['attendees']:\n        all_attendees.extend(attendees_list)\n        \n    # Count the frequency of each unique attendee in the all_attendees list\n    attendee_counts = pd.Series(all_attendees).value_counts()\n    \n    # Get the most frequent attendee\n    most_frequent_attendee = attendee_counts.idxmax()\n    \n    return most_frequent_attendee\n\nanswer = most_frequent_attendee(calendar_data)\n",
+        "true_answer": "walter@ninjatech.ai(accepted)",
+        "answer": "'walter@ninjatech.ai(accepted)\\\\n arash@ninjatech.ai(accepted)'"
+    },
+    {
+        "question": "What is the average meeting duration?",
+        "generated_code": "import pandas as pd\nfrom datetime import datetime\n\ndef calculate_average_duration(calendar_data):\n    # Convert the 'start' and 'end' columns to datetime objects\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    calendar_data['end'] = pd.to_datetime(calendar_data['end'])\n    \n    # Calculate the duration for each meeting\n    calendar_data['duration'] = (calendar_data['end'] - calendar_data['start']).dt.total_seconds()\n    \n    # Calculate the average meeting duration\n    average_duration = calendar_data['duration'].mean()\n    \n    return average_duration\n\nanswer = calculate_average_duration(calendar_data)\n",
+        "true_answer": 3660,
         "answer": "success"
+    },
+    {
+        "question": "What is my latest scheduled meeting for today? tell me meeting ID ",
+        "generated_code": "import pandas as pd\n\ndef latest_meeting_today(calendar_data, today_date):\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    today_meetings = calendar_data[calendar_data['start'].dt.date == pd.to_datetime(today_date).date()]\n    latest_meeting = today_meetings[today_meetings['start'] == today_meetings['start'].max()]\n    return latest_meeting['ID'].values[0]\n\nlatest_meeting_id = latest_meeting_today(calendar_data, '2024-04-02 09:02:30')\n",
+        "true_answer": "magdc98i96lb0n3m8j2uo7d6y4",
+        "answer": "3660.0"
+    },
+    {
+        "question": "What is the total meeting duration for today?",
+        "generated_code": "import pandas as pd \n\ndef query(calendar_data):\n    today = '2024-04-02'\n    today_meetings = calendar_data[(calendar_data['start'].str.contains(today)) | (calendar_data['end'].str.contains(today))]\n    total_duration = today_meetings['duration'].sum()\n    return total_duration\n\nanswer = query(calendar_data)\n",
+        "true_answer": 7200,
+        "answer": "AttributeError('Can only use .str accessor with string values!')"
+    },
+    {
+        "question": "How many meetings that last more than 2 hours?",
+        "generated_code": "import pandas as pd\n\ndef query_meetings_longer_than_2_hours(calendar_data):\n    current_date = pd.Timestamp('2024-04-02 09:02:30')\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    calendar_data['end'] = pd.to_datetime(calendar_data['end'])\n    \n    calendar_data['duration_hours'] = (calendar_data['end'] - calendar_data['start']).dt.total_seconds() / 3600\n    meetings_longer_than_2_hours = calendar_data[calendar_data['duration_hours'] > 2]\n    \n    return len(meetings_longer_than_2_hours)\n\nanswer = query_meetings_longer_than_2_hours(calendar_data)\n",
+        "true_answer": 1,
+        "answer": "success"
+    },
+    {
+        "question": "Do I have meeting in next 2 hours, True or False?",
+        "generated_code": "import pandas as pd\nfrom datetime import datetime, timedelta\n\ndef check_meeting_within_next_2_hours(calendar_data):\n    current_time = datetime.strptime('2024-04-02 09:02:30', '%Y-%m-%d %H:%M:%S')\n    end_time = current_time + timedelta(hours=2)\n    \n    upcoming_meetings = calendar_data[(calendar_data['start'] >= current_time) & (calendar_data['start'] < end_time)]\n    \n    return not upcoming_meetings.empty\n\nanswer = check_meeting_within_next_2_hours(calendar_data)\n",
+        "true_answer": true,
+        "answer": "TypeError('Invalid comparison between dtype=datetime64[ns, UTC] and datetime')"
+    },
+    {
+        "question": "Do I have meeting in today afternoon, True or False?",
+        "generated_code": "import pandas as pd\n\ndef check_meeting_today_afternoon(calendar_data):\n    today_date = '2024-04-02 09:02:30'\n    afternoon_start = '13:00:00'\n    today_afternoon_meetings = calendar_data[(calendar_data['start'].dt.date == today_date) & (calendar_data['start'].dt.time >= pd.to_datetime(afternoon_start).time())]\n    \n    return not today_afternoon_meetings.empty\n\nanswer = check_meeting_today_afternoon(calendar_data)\n",
+        "true_answer": true,
+        "answer": "False"
+    },
+    {
+        "question": "How many meetings do I have meeting in this afternoon?",
+        "generated_code": "import pandas as pd\n\ndef query_meetings_in_afternoon(calendar_data):\n    current_date = pd.to_datetime('2024-04-02 09:02:30')\n    afternoon_start = current_date.replace(hour=12, minute=0, second=0)\n    afternoon_end = current_date.replace(hour=18, minute=0, second=0)\n    \n    meetings_in_afternoon = calendar_data[(pd.to_datetime(calendar_data['start']) >= afternoon_start) & \n                                          (pd.to_datetime(calendar_data['end']) <= afternoon_end)]\n    \n    num_meetings_in_afternoon = len(meetings_in_afternoon)\n    \n    return num_meetings_in_afternoon\n\nanswer = query_meetings_in_afternoon(calendar_data)\n",
+        "true_answer": 1,
+        "answer": "TypeError('Invalid comparison between dtype=datetime64[ns, UTC] and Timestamp')"
+    },
+    {
+        "question": "How many meetings have more than 10 attendees?",
+        "generated_code": "import pandas as pd\n\ndef query_meetings_with_more_than_10_attendees(calendar_data):\n    today_date = '2024-04-02 09:02:30'\n    today_date = pd.to_datetime(today_date, format='%Y-%m-%d %H:%M:%S')\n    \n    # Filter the dataframe for meetings with more than 10 attendees\n    more_than_10_attendees = calendar_data[calendar_data['attendees'].apply(lambda x: len(x.split('\\n')) > 10)]\n    \n    # Count the number of meetings with more than 10 attendees\n    num_meetings_more_than_10_attendees = more_than_10_attendees.shape[0]\n    \n    return num_meetings_more_than_10_attendees\n\n# Example usage\nanswer = query_meetings_with_more_than_10_attendees(calendar_data)\n",
+        "true_answer": 0,
+        "answer": "AttributeError(\"'list' object has no attribute 'split'\")"
+    },
+    {
+        "question": "How many meetings were scheduled for last weekend?",
+        "generated_code": "import pandas as pd\n\ndef count_meetings_last_weekend(calendar_data):\n    today_date = pd.to_datetime('2024-04-02 09:02:30', format='%Y-%m-%d %H:%M:%S')\n    last_weekend_start = today_date - pd.DateOffset(days=today_date.dayofweek + 2)\n    last_weekend_end = today_date - pd.DateOffset(days=today_date.dayofweek + 1)\n    \n    last_weekend_meetings = calendar_data[(pd.to_datetime(calendar_data['start']) >= last_weekend_start) & \n                                          (pd.to_datetime(calendar_data['start']) <= last_weekend_end)]\n    \n    return len(last_weekend_meetings)\n\n# Usage\nanswer = count_meetings_last_weekend(calendar_data)\n",
+        "true_answer": 0,
+        "answer": "TypeError('Invalid comparison between dtype=datetime64[ns, UTC] and Timestamp')"
+    },
+    {
+        "question": "How many meetings did I attended last week?",
+        "generated_code": "import pandas as pd\nfrom datetime import datetime, timedelta\n\ndef query(calendar_data):\n    # Convert start date to datetime format\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    \n    # Get today's date\n    today_date = datetime.strptime('2024-04-02 09:02:30', '%Y-%m-%d %H:%M:%S').date()\n    \n    # Calculate the start date of last week\n    last_week_start = today_date - timedelta(days=today_date.weekday() + 7)\n    \n    # Filter meetings within last week\n    last_week_meetings = calendar_data[(calendar_data['start'].dt.date >= last_week_start) & (calendar_data['start'].dt.date < today_date)]\n    \n    # Count the number of meetings attended last week\n    meetings_attended = len(last_week_meetings[last_week_meetings['status'] != 'cancelled'])\n    \n    return meetings_attended\n\nanswer = query(calendar_data)\n",
+        "true_answer": 2,
+        "answer": "success"
+    },
+    {
+        "question": "How many meetings did I attended last three days?",
+        "generated_code": "import pandas as pd\n\ndef query_attended_meetings_last_three_days(calendar_data):\n    today_date = pd.Timestamp('2024-04-02 09:02:30')\n    three_days_ago = today_date - pd.DateOffset(days=3)\n    \n    meetings_attended_last_three_days = calendar_data[(calendar_data['start'] >= three_days_ago) & (calendar_data['end'] <= today_date) & (calendar_data['status'] != 'cancelled')]\n    \n    return len(meetings_attended_last_three_days)\n\nanswer = query_attended_meetings_last_three_days(calendar_data)\n",
+        "true_answer": 0,
+        "answer": "TypeError('Invalid comparison between dtype=datetime64[ns, UTC] and Timestamp')"
+    },
+    {
+        "question": "How many meetings do I have this tuesday?",
+        "generated_code": "import pandas as pd \nfrom datetime import datetime\n\ndef query_meetings_on_tuesday(calendar_data):\n    # Convert start date to datetime format\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    \n    # Filter meetings that fall on a Tuesday\n    tuesday_meetings = calendar_data[calendar_data['start'].dt.day_name() == 'Tuesday']\n    \n    return len(tuesday_meetings)\n\nanswer = query_meetings_on_tuesday(calendar_data)\n",
+        "true_answer": 2,
+        "answer": "8"
+    },
+    {
+        "question": "Do I have meeting this tuesday, True or False?",
+        "generated_code": "from datetime import datetime\nimport pandas as pd\n\ndef have_meeting_this_tuesday(calendar_data):\n    today_date = datetime.strptime('2024-04-02 09:02:30', '%Y-%m-%d %H:%M:%S')\n    tuesday_date = today_date.replace(day=today_date.day + (1 - today_date.weekday()) % 7)\n\n    meetings_this_tuesday = calendar_data[(calendar_data['start'].dt.day == tuesday_date.day) & \n                                          (calendar_data['start'].dt.month == tuesday_date.month) & \n                                          (calendar_data['start'].dt.year == tuesday_date.year)]\n\n    return not meetings_this_tuesday.empty\n\nanswer = have_meeting_this_tuesday(calendar_data)\n",
+        "true_answer": true,
+        "answer": "success"
+    },
+    {
+        "question": "Do I have meeting tuesday morning this week, True or False?",
+        "generated_code": "import pandas as pd\n\ndef check_meeting_tuesday_morning(calendar_data):\n    today_date = pd.to_datetime('2024-04-02 09:02:30', format='%Y-%m-%d %H:%M:%S')\n    this_week_start = today_date - pd.DateOffset(days=today_date.weekday()) # Get the start of the current week\n    this_week_end = this_week_start + pd.DateOffset(days=6) # Get the end of the current week\n    \n    tuesday_morning_meetings = calendar_data[(calendar_data['start'].dt.day_name() == 'Tuesday') & \n                                            (calendar_data['start'].dt.hour < 12) &\n                                            (calendar_data['start'] >= this_week_start) &\n                                            (calendar_data['end'] <= this_week_end)]\n    \n    return not tuesday_morning_meetings.empty\n\nanswer = check_meeting_tuesday_morning(calendar_data)\n",
+        "true_answer": true,
+        "answer": "TypeError('Invalid comparison between dtype=datetime64[ns, UTC] and Timestamp')"
+    },
+    {
+        "question": "How many meetings do I have tuesday morning this week?",
+        "generated_code": "import pandas as pd\n\ndef query(calendar_data):\n    today_date = pd.to_datetime('2024-04-02 09:02:30', format='%Y-%m-%d %H:%M:%S')\n    tuesday_morning_meetings = calendar_data[(calendar_data['start'].dt.day_name() == 'Tuesday') & \n                                            (calendar_data['start'].dt.hour < 12) &\n                                            (calendar_data['start'].dt.week == today_date.week)]\n    return len(tuesday_morning_meetings)\n\nanswer = query(calendar_data)\n",
+        "true_answer": 1,
+        "answer": "AttributeError(\"'DatetimeProperties' object has no attribute 'week'\")"
+    },
+    {
+        "question": "Do I have meeting this tuesday afternoon, True or False??",
+        "generated_code": "import pandas as pd\n\ndef query_meeting_this_tuesday_afternoon(calendar_data):\n    # Get today's date\n    today_date = pd.to_datetime('2024-04-02 09:02:30')\n    \n    # Calculate the date for the next tuesday\n    next_tuesday = today_date + pd.DateOffset(days=(1 - today_date.weekday()) % 7 + 1)\n    \n    # Filter meetings happening on next tuesday afternoon\n    next_tuesday_afternoon_meetings = calendar_data[(calendar_data['start'].dt.dayofweek == next_tuesday.dayofweek) & \n                                                    (calendar_data['start'].dt.hour >= 12) & \n                                                    (calendar_data['start'].dt.hour < 18)]\n    \n    if len(next_tuesday_afternoon_meetings) > 0:\n        return True\n    else:\n        return False\n\nanswer = query_meeting_this_tuesday_afternoon(calendar_data)\n",
+        "true_answer": true,
+        "answer": "False"
+    },
+    {
+        "question": "How many meetings do I have in this tuesday afternoon?",
+        "generated_code": "from datetime import datetime \nimport pandas as pd \n\ndef meetings_on_tuesday_afternoon(calendar_data):\n    current_date = datetime.strptime('2024-04-02 09:02:30', '%Y-%m-%d %H:%M:%S')\n    tuesday_afternoon_meetings = calendar_data[(calendar_data['start'].dt.dayofweek == 1) & (calendar_data['start'].dt.hour >= 12) & (calendar_data['start'].dt.hour < 18)]\n    return len(tuesday_afternoon_meetings)\n\nanswer = meetings_on_tuesday_afternoon(calendar_data)\n",
+        "true_answer": 1,
+        "answer": "5"
+    },
+    {
+        "question": "Do I have meeting this weekend, True or False?",
+        "generated_code": "from datetime import datetime\n\ndef query_meeting_this_weekend(calendar_data):\n    current_date = datetime.strptime('2024-04-02 09:02:30', '%Y-%m-%d %H:%M:%S')\n    weekend_start = current_date.replace(hour=0, minute=0, second=0) + pd.DateOffset(days=(5-current_date.weekday()) % 7)\n    weekend_end = current_date.replace(hour=23, minute=59, second=59) + pd.DateOffset(days=(6-current_date.weekday()) % 7)\n    \n    weekend_meetings = calendar_data[(pd.to_datetime(calendar_data['start']) >= weekend_start) & (pd.to_datetime(calendar_data['end']) <= weekend_end)]\n    \n    return len(weekend_meetings) > 0\n\nanswer = query_meeting_this_weekend(calendar_data)\n",
+        "true_answer": true,
+        "answer": "TypeError('Invalid comparison between dtype=datetime64[ns, UTC] and Timestamp')"
+    },
+    {
+        "question": "How many meetings do I have this weekend?",
+        "generated_code": "import pandas as pd\n\ndef query_weekend_meetings(calendar_data):\n    # Convert 'start' column to datetime format\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n\n    # Get today's date\n    today_date = pd.to_datetime('2024-04-02 09:02:30')\n\n    # Find the upcoming Saturday and Sunday\n    saturday = today_date + pd.DateOffset(days=(5-today_date.weekday()))\n    sunday = today_date + pd.DateOffset(days=(6-today_date.weekday()))\n\n    # Filter meetings that are scheduled for this Saturday and Sunday\n    weekend_meetings = calendar_data[(calendar_data['start'].dt.date == saturday.date()) | (calendar_data['start'].dt.date == sunday.date())]\n\n    return len(weekend_meetings)\n\n# Call the function and store the result\nanswer = query_weekend_meetings(calendar_data)\n",
+        "true_answer": 1,
+        "answer": "success"
+    },
+    {
+        "question": "How many meetings do I have this week in total?",
+        "generated_code": "import pandas as pd\n\ndef get_meetings_this_week(calendar_data):\n    # Convert 'start' column to datetime format\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n\n    # Get the current date\n    today_date = pd.Timestamp('2024-04-02 09:02:30')\n\n    # Get the start and end date of the current week\n    start_week = today_date - pd.Timedelta(days=today_date.dayofweek)\n    end_week = start_week + pd.Timedelta(days=6)\n\n    # Filter the meetings that fall within the current week\n    meetings_this_week = calendar_data[(calendar_data['start'] >= start_week) & (calendar_data['start'] <= end_week)]\n\n    return len(meetings_this_week)\n\nanswer = get_meetings_this_week(calendar_data)\n",
+        "true_answer": 4,
+        "answer": "TypeError('Invalid comparison between dtype=datetime64[ns, UTC] and Timestamp')"
+    },
+    {
+        "question": "Do I have meeting next weekend, True or False?",
+        "generated_code": "import pandas as pd\n\ndef query_meeting_next_weekend(calendar_data):\n    today_date = pd.to_datetime('2024-04-02 09:02:30', format='%Y-%m-%d %H:%M:%S').date()\n    next_weekend_start = today_date + pd.DateOffset(days=(5-today_date.weekday()))\n    next_weekend_end = next_weekend_start + pd.DateOffset(days=2)\n    \n    meetings_next_weekend = calendar_data[(pd.to_datetime(calendar_data['start']).dt.date >= next_weekend_start) & (pd.to_datetime(calendar_data['end']).dt.date <= next_weekend_end)]\n    \n    return not meetings_next_weekend.empty\n\nanswer = query_meeting_next_weekend(calendar_data)\n",
+        "true_answer": false,
+        "answer": "TypeError('Cannot compare Timestamp with datetime.date. Use ts == pd.Timestamp(date) or ts.date() == date instead.')"
+    },
+    {
+        "question": "How many meetings do I have next weekend?",
+        "generated_code": "import pandas as pd\n\ndef query_meetings_next_weekend(calendar_data):\n    # Convert start date column to datetime format\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    \n    # Get today's date\n    today_date = pd.to_datetime('2024-04-02 09:02:30', format='%Y-%m-%d %H:%M:%S')\n    \n    # Find the next weekend dates\n    next_weekend_start = today_date + pd.DateOffset(days=(5-today_date.dayofweek))\n    next_weekend_end = today_date + pd.DateOffset(days=(6-today_date.dayofweek))\n    \n    # Filter meetings that fall within the next weekend\n    next_weekend_meetings = calendar_data[(calendar_data['start'] >= next_weekend_start) & (calendar_data['start'] <= next_weekend_end)]\n    \n    return len(next_weekend_meetings)\n\n# Call the function with the calendar_data dataframe\nanswer = query_meetings_next_weekend(calendar_data)\n",
+        "true_answer": 0,
+        "answer": "TypeError('Invalid comparison between dtype=datetime64[ns, UTC] and Timestamp')"
+    },
+    {
+        "question": "How many meetings do I have this weekday?",
+        "generated_code": "from datetime import datetime\n\ndef query(calendar_data):\n    # Convert start dates to datetime objects\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    \n    # Filter meetings for the current weekday\n    today = datetime.strptime('2024-04-02', '%Y-%m-%d') # Assuming it's a Monday\n    meetings_this_weekday = calendar_data[calendar_data['start'].dt.dayofweek == today.weekday()]\n    \n    return len(meetings_this_weekday)\n\nanswer = query(calendar_data)\n",
+        "true_answer": 3,
+        "answer": "8"
+    },
+    {
+        "question": "Are there any meetings scheduled for this Friday afternoon, True or False?",
+        "generated_code": "import pandas as pd\n\ndef query_meetings_scheduled_for_friday_afternoon(calendar_data):\n    # Filter meetings for this Friday afternoon\n    today_date = pd.to_datetime('2024-04-02 09:02:30', format='%Y-%m-%d %H:%M:%S')\n    friday_afternoon_meetings = calendar_data[(calendar_data['start'].dt.weekday == 4) & \n                                              (calendar_data['start'].dt.hour >= 12) & \n                                              (calendar_data['start'].dt.hour < 18)]\n    \n    return not friday_afternoon_meetings.empty\n\nanswer = query_meetings_scheduled_for_friday_afternoon(calendar_data)\n",
+        "true_answer": true,
+        "answer": "success"
+    },
+    {
+        "question": "How many meetings do I have this Friday afternoon?",
+        "generated_code": "from datetime import datetime\n\ndef meetings_this_friday_afternoon(calendar_data):\n    # Get today's date\n    today_date = datetime.strptime('2024-04-02 09:02:30', '%Y-%m-%d %H:%M:%S')\n    \n    # Get the weekday for Friday (4 represents Friday)\n    friday = (today_date.weekday() + 4) % 7\n    \n    # Filter meetings for this Friday afternoon\n    friday_afternoon_meetings = calendar_data[(calendar_data['start'].dt.weekday == friday) & \n                                              (calendar_data['start'].dt.hour >= 12) & \n                                              (calendar_data['start'].dt.hour < 18)]\n    \n    return len(friday_afternoon_meetings)\n\nnum_meetings = meetings_this_friday_afternoon(calendar_data)\n",
+        "true_answer": 1,
+        "answer": "success"
+    },
+    {
+        "question": "What was the last meeting attended by natalia?, tell me the meeting ID",
+        "generated_code": "import pandas as pd\n\ndef query_last_meeting_attended_by_natalia(calendar_data):\n    # Convert 'start' column to datetime format\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    \n    # Filter the meetings where 'attendees' column contains 'natalia'\n    natalia_meetings = calendar_data[calendar_data['attendees'].str.contains('natalia')]\n\n    # Sort the meetings by 'start' date in descending order\n    sorted_meetings = natalia_meetings.sort_values(by='start', ascending=False)\n\n    # Get the ID of the last meeting attended by natalia\n    last_meeting_id = sorted_meetings.iloc[0]['ID']\n\n    return last_meeting_id\n\nanswer = query_last_meeting_attended_by_natalia(calendar_data)\n",
+        "true_answer": "mipnc82k87hc1n4q9v10g1r9w9",
+        "answer": "KeyError(\"None of [Index([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan,\\n       nan, nan, nan, nan, nan, nan],\\n      dtype='float64')] are in the [columns]\")"
+    },
+    {
+        "question": "How many meetings which are yet to start this week?",
+        "generated_code": "import pandas as pd\n\ndef query_meetings_to_start_this_week(calendar_data):\n    today_date = pd.to_datetime('2024-04-02 09:02:30')\n    end_of_week = today_date + pd.offsets.Week(weekday=4) # Assuming week ends on Friday\n    \n    filtered_data = calendar_data[(pd.to_datetime(calendar_data['start']) >= today_date) & (pd.to_datetime(calendar_data['start']) <= end_of_week)]\n    \n    return len(filtered_data)\n\nanswer = query_meetings_to_start_this_week(calendar_data)\n",
+        "true_answer": 4,
+        "answer": "TypeError('Invalid comparison between dtype=datetime64[ns, UTC] and Timestamp')"
+    },
+    {
+        "question": "Find the start time of next meeting?",
+        "generated_code": "import pandas as pd\n\ndef find_next_meeting_start_time(calendar_data, current_date):\n    # Convert current_date to datetime format\n    current_date = pd.to_datetime(current_date, format='%Y-%m-%d %H:%M:%S')\n\n    # Filter out cancelled meetings\n    upcoming_meetings = calendar_data[calendar_data['status'] != 'cancelled']\n\n    # Sort the upcoming meetings based on the start time\n    upcoming_meetings = upcoming_meetings.sort_values(by='start')\n\n    # Find the index of the next meeting after the current date/time\n    next_meeting_index = (upcoming_meetings['start'] > current_date).idxmax()\n\n    # Retrieve the start time of the next meeting\n    next_meeting_start_time = upcoming_meetings.loc[next_meeting_index, 'start']\n\n    return next_meeting_start_time\n\nanswer = find_next_meeting_start_time(calendar_data, '2024-04-02 09:02:30')\n",
+        "true_answer": "2024-04-02 09:30:00-00:00",
+        "answer": "TypeError('Invalid comparison between dtype=datetime64[ns, UTC] and Timestamp')"
+    },
+    {
+        "question": "Find the end time of next meeting?",
+        "generated_code": "import pandas as pd \n\ndef find_next_meeting_end_time(calendar_data, current_time):\n    calendar_data['start'] = pd.to_datetime(calendar_data['start'])\n    next_meeting = calendar_data[calendar_data['start'] > current_time].sort_values('start').iloc[0]\n    return next_meeting['end']\n\ncurrent_time = pd.to_datetime('2024-04-02 09:02:30')\nnext_meeting_end_time = find_next_meeting_end_time(calendar_data, current_time)\nnext_meeting_end_time\n",
+        "true_answer": "2024-04-02 11:00:00-00:00",
+        "answer": "TypeError('Invalid comparison between dtype=datetime64[ns, UTC] and Timestamp')"
+    },
+    {
+        "question": "Find the duration of meeting with id 'mahsm54f88qb0j5o8p3uo0a9v8'.?",
+        "generated_code": "import pandas as pd\n\ndef find_meeting_duration(calendar_data, meeting_id):\n    meeting = calendar_data[calendar_data['ID'] == meeting_id]\n    if not meeting.empty:\n        return meeting['duration'].values[0]\n    else:\n        return \"Meeting ID not found in the calendar data.\"\n\n# Assuming calendar_data is the variable containing the DataFrame\nanswer = find_meeting_duration(calendar_data, 'mahsm54f88qb0j5o8p3uo0a9v8')\n",
+        "true_answer": 3600,
+        "answer": "success"
+    },
+    {
+        "question": "How many meetings got confirmed?",
+        "generated_code": "import pandas as pd\n\ndef query_num_confirmed_meetings(calendar_data):\n    today_date = pd.to_datetime('2024-04-02 09:02:30')\n\n    confirmed_meetings = calendar_data[(calendar_data['status'] == 'confirmed') & (pd.to_datetime(calendar_data['end']) > today_date)]\n    num_confirmed_meetings = len(confirmed_meetings)\n\n    return num_confirmed_meetings\n\nnum_confirmed_meetings = query_num_confirmed_meetings(calendar_data)\n",
+        "true_answer": 17,
+        "answer": "TypeError('Invalid comparison between dtype=datetime64[ns, UTC] and Timestamp')"
     }
 ]
