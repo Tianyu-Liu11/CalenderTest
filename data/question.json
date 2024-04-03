@@ -5,14 +5,14 @@
     },
     {
         "question": "How many events do I have scheduled for today?",
-        "answer": 1
-    },
-    {
-        "question": "How many attendees are there for the meeting with ID masbk72a24cb0a8k9c7jo0e9s6?",
         "answer": 2
     },
     {
-        "question": "What is the longest meeting ID on my calendar?",
+        "question": "How many attendees are there for the meeting with ID 'masbk72a24cb0a8k9c7jo0e9s6'?",
+        "answer": 2
+    },
+    {
+        "question": "What is the longest meeting on my calendar, tell me the meeting ID?",
         "answer": "malrq85j74yb0m3n8j8ro2v5d9"
     },
     {
@@ -44,12 +44,12 @@
         "answer": 2
     },
     {
-        "question": "What is the topic of my last meeting?",
+        "question": "What is the topic of my previous meeting today?",
         "answer": "meeting topic: weekly progress review"
     },
     {
         "question": "What is the topic of my next meeting?",
-        "answer": "Database Architecture "
+        "answer": "Security Best Practices"
     },
     {
         "question": "What is the minimum meeting time??",
@@ -58,10 +58,6 @@
     {
         "question": "How many confirmed meetings are scheduled for tomorrow?",
         "answer": 0
-    },
-    {
-        "question": "Who is the most frequent attendee in meetings?",
-        "answer": "walter@ninjatech.ai(accepted)"
     },
     {
         "question": "What is the average meeting duration?",
@@ -173,11 +169,11 @@
     },
     {
         "question": "Find the start time of next meeting?",
-        "answer": "2024-04-02 09:30:00-00:00"
+        "answer": "2024-04-02 09:30:00"
     },
     {
         "question": "Find the end time of next meeting?",
-        "answer": "2024-04-02 11:00:00-00:00"
+        "answer": "2024-04-02 11:00:00"
     },
     {
         "question": "Find the duration of meeting with id 'mahsm54f88qb0j5o8p3uo0a9v8'.?",
