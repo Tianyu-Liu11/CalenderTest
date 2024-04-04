@@ -100,6 +100,13 @@ def main():
         question_answer_summary['generated_code'] = llm_reply
     
         result_list.append(question_answer_summary.copy())
+        
+        if str(q_a_pair['true_answer']) in llm_reply:
+            result['success'] += 1
+        else:
+            result['wrong_answer'] += 1
+            
+    print(result)
     
     with open('baseline_' + f"""{MODEL}""" + '_results.json', 'w', encoding='utf-8') as f:
         json.dump(result_list, f, indent=4)    

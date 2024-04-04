@@ -1,0 +1,278 @@
+[
+    {
+        "question": "How many meetings do I have attended in total?",
+        "true_answer": 18,
+        "generated_answer": "",
+        "generated_code": "You have attended 20 meetings in total."
+    },
+    {
+        "question": "How many events do I have scheduled for today?",
+        "true_answer": 2,
+        "generated_answer": "",
+        "generated_code": "You have no events scheduled for today."
+    },
+    {
+        "question": "How many attendees are there for the meeting with ID 'masbk72a24cb0a8k9c7jo0e9s6'?",
+        "true_answer": 2,
+        "generated_answer": "",
+        "generated_code": "There are 7 attendees for the meeting with ID 'masbk72a24cb0a8k9c7jo0e9s6'."
+    },
+    {
+        "question": "What is the longest meeting on my calendar, tell me the meeting ID?",
+        "true_answer": "malrq85j74yb0m3n8j8ro2v5d9",
+        "generated_answer": "",
+        "generated_code": "The meeting with ID \"malrq85j74yb0m3n8j8ro2v5d9\" is scheduled for the longest duration."
+    },
+    {
+        "question": "How many events with duration longer than 1 hours?",
+        "true_answer": 6,
+        "generated_answer": "",
+        "generated_code": "9 events have a duration of more than 1 hour."
+    },
+    {
+        "question": "How many meeting were cancelled in total?",
+        "true_answer": 2,
+        "generated_answer": "",
+        "generated_code": "Three meetings were cancelled in total."
+    },
+    {
+        "question": "How many events are scheduled today?",
+        "true_answer": 2,
+        "generated_answer": "",
+        "generated_code": "Based on the provided JSON file, there are six events scheduled for today."
+    },
+    {
+        "question": "How many events are scheduled tomorrow?",
+        "true_answer": 0,
+        "generated_answer": "",
+        "generated_code": "Three events are scheduled for tomorrow including Weekly Team Meeting, Contract Negotiation, and Security Best Practices."
+    },
+    {
+        "question": "Do I have me with natalia tomorrow, True or False?",
+        "true_answer": false,
+        "generated_answer": "",
+        "generated_code": "False, you do not have a meeting with Natalia tomorrow."
+    },
+    {
+        "question": "How many meeting did I have yestaerday ?",
+        "true_answer": 0,
+        "generated_answer": "",
+        "generated_code": "Yesterday, you had three confirmed meetings. They were the 'Meeting about Project Overview', 'Weekly Team Meeting', and 'Database Architecture' meetings."
+    },
+    {
+        "question": "How many meetings do I have for next 3 days?",
+        "true_answer": 2,
+        "generated_answer": "",
+        "generated_code": "You have 7 meetings for the next 3 days."
+    },
+    {
+        "question": "What is the topic of my previous meeting today?",
+        "true_answer": "meeting topic: weekly progress review",
+        "generated_answer": "",
+        "generated_code": "The topic of your previous meeting today is 'Contract Negotiation'."
+    },
+    {
+        "question": "What is the topic of my next meeting?",
+        "true_answer": "Security Best Practices",
+        "generated_answer": "",
+        "generated_code": "The topic of your next meeting is \"Job Application Discussion.\""
+    },
+    {
+        "question": "What is the minimum meeting time??",
+        "true_answer": 1200,
+        "generated_answer": "",
+        "generated_code": "The minimum meeting time is 30 minutes."
+    },
+    {
+        "question": "How many confirmed meetings are scheduled for tomorrow?",
+        "true_answer": 0,
+        "generated_answer": "",
+        "generated_code": "No meetings are scheduled for tomorrow."
+    },
+    {
+        "question": "What is the average meeting duration?",
+        "true_answer": 3660,
+        "generated_answer": "",
+        "generated_code": "The average meeting duration is 1 hour and 5 minutes."
+    },
+    {
+        "question": "What is my latest scheduled meeting for today? tell me meeting ID ",
+        "true_answer": "magdc98i96lb0n3m8j2uo7d6y4",
+        "generated_answer": "",
+        "generated_code": "The latest schedule meeting for today was 'Job Application Discussion' [ID: mambf90j96gb0m3p8u9fo0q7v8] which is from 09:00:00-00:00 to 10:30:00-00:00."
+    },
+    {
+        "question": "What is the total meeting duration for today?",
+        "true_answer": 7200,
+        "generated_answer": "",
+        "generated_code": "The total meeting duration for today is 2 hours and 30 minutes."
+    },
+    {
+        "question": "How many meetings that last more than 2 hours?",
+        "true_answer": 1,
+        "generated_answer": "",
+        "generated_code": "Out of the 20 meetings, 2 meetings last more than 2 hours."
+    },
+    {
+        "question": "Do I have meeting in next 2 hours, True or False?",
+        "true_answer": true,
+        "generated_answer": "",
+        "generated_code": "False. You do not have a meeting in the next 2 hours."
+    },
+    {
+        "question": "Do I have meeting in today afternoon, True or False?",
+        "true_answer": true,
+        "generated_answer": "",
+        "generated_code": "True, you have a Contract Negotiation meeting scheduled for today at 2:00 PM."
+    },
+    {
+        "question": "How many meetings do I have meeting in this afternoon?",
+        "true_answer": 1,
+        "generated_answer": "",
+        "generated_code": "You have 4 meetings scheduled for this afternoon."
+    },
+    {
+        "question": "How many meetings have more than 10 attendees?",
+        "true_answer": 0,
+        "generated_answer": "",
+        "generated_code": "There are five meetings with more than 10 attendees - Contract Negotiation, Team Introduction, Onboarding Process, Weekly Team Meeting, and API Integration."
+    },
+    {
+        "question": "How many meetings were scheduled for last weekend?",
+        "true_answer": 0,
+        "generated_answer": "",
+        "generated_code": "Two meetings were scheduled for last weekend."
+    },
+    {
+        "question": "How many meetings did I attended last week?",
+        "true_answer": 2,
+        "generated_answer": "",
+        "generated_code": "Based on the provided JSON file, you attended 3 meetings last week: \"Topic: Job Application Discussion,\" \"Contract Negotiation,\" and \"Team Introduction.\""
+    },
+    {
+        "question": "How many meetings did I attended last three days?",
+        "true_answer": 0,
+        "generated_answer": "",
+        "generated_code": "You attended a total of 4 meetings in the last three days."
+    },
+    {
+        "question": "How many meetings do I have this tuesday?",
+        "true_answer": 2,
+        "generated_answer": "",
+        "generated_code": "You have 2 meetings this Tuesday."
+    },
+    {
+        "question": "Do I have meeting this tuesday, True or False?",
+        "true_answer": true,
+        "generated_answer": "",
+        "generated_code": "False, you do not have a meeting this Tuesday."
+    },
+    {
+        "question": "Do I have meeting tuesday morning this week, True or False?",
+        "true_answer": true,
+        "generated_answer": "",
+        "generated_code": "False."
+    },
+    {
+        "question": "How many meetings do I have tuesday morning this week?",
+        "true_answer": 1,
+        "generated_answer": "",
+        "generated_code": "You have three meetings scheduled for this Tuesday morning."
+    },
+    {
+        "question": "Do I have meeting this tuesday afternoon, True or False??",
+        "true_answer": true,
+        "generated_answer": "",
+        "generated_code": "False, you do not have a meeting this Tuesday afternoon."
+    },
+    {
+        "question": "How many meetings do I have in this tuesday afternoon?",
+        "true_answer": 1,
+        "generated_answer": "",
+        "generated_code": "You have one meeting this Tuesday afternoon, starting at 14:00 and ending at 15:30, which is the \"Contract Negotiation\" meeting."
+    },
+    {
+        "question": "Do I have meeting this weekend, True or False?",
+        "true_answer": true,
+        "generated_answer": "",
+        "generated_code": "False. There is no meeting scheduled for this weekend."
+    },
+    {
+        "question": "How many meetings do I have this weekend?",
+        "true_answer": 1,
+        "generated_answer": "",
+        "generated_code": "There are two confirmed meetings this weekend. The first one is \"Contract Negotiation\" on Saturday, February 5th from 2:00 PM to 3:30 PM and the second one is \"Onboarding Process\" on Sunday, February 6th from 10:00 to 11:00."
+    },
+    {
+        "question": "How many meetings do I have this week in total?",
+        "true_answer": 4,
+        "generated_answer": "",
+        "generated_code": "This week you have 20 meetings in total."
+    },
+    {
+        "question": "Do I have meeting next weekend, True or False?",
+        "true_answer": false,
+        "generated_answer": "",
+        "generated_code": "True. You have meetings scheduled for the upcoming weekends."
+    },
+    {
+        "question": "How many meetings do I have next weekend?",
+        "true_answer": 0,
+        "generated_answer": "",
+        "generated_code": "You have 3 meetings scheduled for next weekend."
+    },
+    {
+        "question": "How many meetings do I have this weekday?",
+        "true_answer": 3,
+        "generated_answer": "",
+        "generated_code": "You have 9 confirmed meetings this weekday."
+    },
+    {
+        "question": "Are there any meetings scheduled for this Friday afternoon, True or False?",
+        "true_answer": true,
+        "generated_answer": "",
+        "generated_code": "False. No meetings are scheduled for this Friday afternoon."
+    },
+    {
+        "question": "How many meetings do I have this Friday afternoon?",
+        "true_answer": 1,
+        "generated_answer": "",
+        "generated_code": "You have 1 meeting this Friday afternoon. It is a Contract Negotiation starting at 2:00 PM."
+    },
+    {
+        "question": "What was the last meeting attended by natalia?, tell me the meeting ID",
+        "true_answer": "mipnc82k87hc1n4q9v10g1r9w9",
+        "generated_answer": "",
+        "generated_code": "The last meeting attended by Natalia was the API Integration meeting on April 7, 2024, with the meeting ID mahsm54f88qb0j5o8p3uo0a9v8."
+    },
+    {
+        "question": "How many meetings which are yet to start this week?",
+        "true_answer": 4,
+        "generated_answer": "",
+        "generated_code": "There are 8 meetings which are yet to start this week."
+    },
+    {
+        "question": "Find the start time of next meeting?",
+        "true_answer": "2024-04-02 09:30:00",
+        "generated_answer": "",
+        "generated_code": "The start time of the next meeting is on 5th February 2024 at 2:00 PM GMT."
+    },
+    {
+        "question": "Find the end time of next meeting?",
+        "true_answer": "2024-04-02 11:00:00",
+        "generated_answer": "",
+        "generated_code": "The end time of the next meeting is at 16:00:00."
+    },
+    {
+        "question": "Find the duration of meeting with id 'mahsm54f88qb0j5o8p3uo0a9v8'.?",
+        "true_answer": 3600,
+        "generated_answer": "",
+        "generated_code": "The meeting with ID 'mahsm54f88qb0j5o8p3uo0a9v8' has a duration of 1 hour."
+    },
+    {
+        "question": "How many meetings got confirmed?",
+        "true_answer": 17,
+        "generated_answer": "",
+        "generated_code": "There are 13 meetings which are marked as confirmed."
+    }
+]
