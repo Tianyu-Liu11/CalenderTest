@@ -1,11 +1,24 @@
-Agenda = Index(['ID', 'status', 'summary', 'start', 'end', 'duration', 'attendees'], dtype=‘object')
+# Code generation for filtration
+
+## Dataset
+Directory: CalendarTest
+
+ - calendar_data.csv
+   - A Pandas dataframe named calendar_data, columns = [ID, status, summary, start, end , duration, attendees], which consists of all the users calendar information; 
+   - This dataframe consists of 20 meeting records
+
+- question.json
+  - Questions or tasks we use to evaluate the algorithm. Data format: JSON; Number of tasks: 46 tasks
+  - "question": NL questions; 
+  - "answer": ground truth answer, calculated manully based on the dataframe calendar_data
+
+## Algorithms
+- Baseline 1: GPT3.5+finetuned
+- Baseline 2: GPT4
+- Algorithm 1: GPT4+Prompt
+- Algorithm 2: GPT4+Prompt
 
 
-ID                                                                    mambf90j96gb0m3p8u9fo0q7v8
-status                                                                                 confirmed
-summary                                                                               AI gateway
-start                                                                  2024-02-05 12:00:00-08:00
-end                                                                    2024-02-05 13:00:00-08:00
-duration                                                                                  3600.0
-attendees    temp-testing@ninjatech.ai(accepted)\nyevhenia.spiridonova@ninjatech.ai(needsAction)
-Name: 40, dtype: object
+## Performance evaluation
+
+- pass@1 accuracy
