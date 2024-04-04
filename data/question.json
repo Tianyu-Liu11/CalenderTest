@@ -36,7 +36,7 @@
         "answer": false
     },
     {
-        "question": "How many meeting did I have yestaerday ?",
+        "question": "How many meeting did I have yesterday ?",
         "answer": 0
     },
     {
@@ -44,7 +44,7 @@
         "answer": 2
     },
     {
-        "question": "What is the topic of my previous meeting today?",
+        "question": "What is the topic of my last meeting?",
         "answer": "meeting topic: weekly progress review"
     },
     {
