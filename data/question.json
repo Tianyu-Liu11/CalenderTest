@@ -1,15 +1,15 @@
 [
     {
-        "question": "How many meetings do I have attended in total?",
-        "answer": 18
+        "question": "How many meetings do I have confirmed in total?",
+        "answer": 17
     },
     {
         "question": "How many events do I have scheduled for today?",
         "answer": 2
     },
     {
-        "question": "How many attendees are there for the meeting with ID 'masbk72a24cb0a8k9c7jo0e9s6'?",
-        "answer": 2
+        "question": "Find the meeting I attended with salesteam, tell me the meeting ID?",
+        "answer": "masbk72a24cb0a8k9c7jo0e9s6"
     },
     {
         "question": "What is the longest meeting on my calendar, tell me the meeting ID?",
@@ -41,15 +41,15 @@
     },
     {
         "question": "How many meetings do I have for next 3 days?",
-        "answer": 3
+        "answer": 2
     },
     {
         "question": "What is the topic of my last meeting?",
-        "answer": "meeting topic: weekly progress review"
+        "answer": "API Integration"
     },
     {
         "question": "What is the topic of my next meeting?",
-        "answer": "Security Best Practices"
+        "answer": "Database Architecture"
     },
     {
         "question": "What is the minimum meeting time??",
@@ -88,8 +88,8 @@
         "answer": 1
     },
     {
-        "question": "How many meetings have more than 10 attendees?",
-        "answer": 0
+        "question": "Do I have database lecture today, true or false?",
+        "answer": true
     },   
     {
         "question": "How many meetings were scheduled for last weekend?",
