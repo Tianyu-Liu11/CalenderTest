@@ -1,0 +1,80 @@
+{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant."
+        },
+        {
+            "role": "user",
+            "content": "Create a python executable step by step solution that uses calendar_tools to solve the task. Create a plan before solving the task.\n\nTools you can use:\n1. create_meeting_between_multiple_people(meeting_title: str, meeting_description: str, meeting_duration: timedelta, meeting_windows: list[dict], meeting_contact_emails: list[str], recurrence_rrule_str_list: Optional[List[str]] = None)\nCalls another service to schedule a meeting between multiple people in their calendars.\n\n2. delete_events(ids_list: list) -> int\nThis function deletes events from a calendar.\n\n3. agenda_filtration(agenda: pd.DataFrame, task: str) -> str\nThis function does intelligent analysis of the provided agenda. Agenda is returned by get_agenda function.\n\n4. update_events(kwargs_list: list) -> int\nThis function attempts to update events in a Google Calendar using a list of keyword arguments. \n\n5. filter_get_events_ids(agenda: pd.DataFrame, task: str) -> List[str]\nThis function does search of events' IDs from the provided agenda that satisfy the task condition. Agenda is returned by get_agenda function.\n\n6. get_contact_emails_from_utterance(utterance: str) -> list[str]\nTakes a string containing names and/or emails of a meeting attendees contacts and returns a list of emails of those contacts.\n\n7. get_agenda(timeMin: datetime.datetime, timeMax: datetime.datetime) -> pd.DataFrame\nThis function returns a list of events from the user's Google Calendar.\n\n8. modify_event_attendees(event_id: str, attendees: list[dict], operation: str)\n    This function updates the attendees of a meeting (specified by a meeting ID). It supports \n    operations 'add', 'update', and 'delete'. The attendees argument is a list of dictionaries\n    that must always contain the 'email' key so we can identify the attendee.\n\n#####\nBegin!\nTask: What did my calendar show for the team-building activity with the HR department last Saturday?"
+        },
+        {
+            "role": "assistant",
+            "content": "Plan:\n1. Import necessary libraries and modules.\n2. Get the current date and time.\n3. Calculate the date and time for last Saturday.\n4. Define the time range for the search: from the start of last Saturday to the end of last Saturday.\n5. Get the user's agenda for last Saturday.\n6. Filter the agenda to check for the \"team-building activity with the HR department\" event.\n7. Print the result."
+        },
+        {
+            "role": "user",
+            "content": "Continue"
+        },
+        {
+            "role": "assistant",
+            "content": "1. Import necessary libraries and modules.\n```python\nimport datetime\nfrom pytz import timezone\nfrom calendar_tools import get_agenda, agenda_filtration\n```"
+        },
+        {
+            "role": "user",
+            "content": "Ok, done"
+        },
+        {
+            "role": "assistant",
+            "content": "2. Get the current date and time.\n```python\nnow = datetime.datetime.now(timezone(\"*TEXT_TIMEZONE*\"))\n```"
+        },
+        {
+            "role": "user",
+            "content": "Ok, done"
+        },
+        {
+            "role": "assistant",
+            "content": "3. Calculate the date and time for last Saturday.\n```python\n# calculate the date for last Saturday\n# if today is Saturday, last Saturday was 7 days ago\nif now.weekday() == 5:\n    last_saturday = now - datetime.timedelta(days=7)\nelse:\n    # last Saturday is (today's weekday number + 1) days ago if today is Sunday, otherwise\n    # it is (today's weekday number - 5) days ago\n    last_saturday = now - datetime.timedelta(days=(now.weekday() - 5 if now.weekday() > 5 else 1))\n```"
+        },
+        {
+            "role": "user",
+            "content": "Ok, done"
+        },
+        {
+            "role": "assistant",
+            "content": "4. Define the time range for the search: from the start of last Saturday to the end of last Saturday.\n```python\ntimeMin = last_saturday.replace(hour=0, minute=0, second=0, microsecond=0).strftime(\"%Y-%m-%dT%H:%M:%S%z\")\ntimeMax = last_saturday.replace(hour=23, minute=59, second=59, microsecond=0).strftime(\"%Y-%m-%dT%H:%M:%S%z\")\n```"
+        },
+        {
+            "role": "user",
+            "content": "Ok, done"
+        },
+        {
+            "role": "assistant",
+            "content": "5. Get the user's agenda for last Saturday.\n```python\nagenda = get_agenda(timeMin=timeMin, timeMax=timeMax)\n```"
+        },
+        {
+            "role": "user",
+            "content": "Ok, done"
+        },
+        {
+            "role": "assistant",
+            "content": "6. Filter the agenda to check for the \"team-building activity with the HR department\" event.\n```python\ntask = \"What did my calendar show for the team-building activity with the HR department last Saturday?\"\nresult = agenda_filtration(agenda, task)\n```"
+        },
+        {
+            "role": "user",
+            "content": "Ok, done"
+        },
+        {
+            "role": "assistant",
+            "content": "7. Print the result.\n```python\nprint(result)\n```"
+        },
+        {
+            "role": "user",
+            "content": "Ok, done"
+        },
+        {
+            "role": "assistant",
+            "content": "TASK COMPLETED."
+        }
+    ]
+}
