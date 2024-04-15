@@ -10,167 +10,92 @@ import argparse
 from openai import OpenAI
 from dotenv import load_dotenv
 from datetime import datetime
+import pandas as pd
+from pandas import Timestamp, DataFrame
+from datetime import timedelta
 
 
-def get_calendar_data(DATA_PATH):
-    return pd.read_csv(DATA_PATH + "calendar_data.csv")
-
-
-def get_question(DATA_PATH):
-    with open(DATA_PATH + "question.json") as json_file:
-        json_data = json.load(json_file)
-    return json_data
+#    Not finished yet
+# convert the start and end time into datetime format (%Y-%m-%d %H:%M:%S) to make it easier to generate code
+def convert_date(calendar_data):   
+    # Convert 'start' and 'end' columns to datetime objects
+    # calendar_data['start'] = pd.to_datetime(calendar_data['start'])
+    # calendar_data['end']   = pd.to_datetime(calendar_data['end'])
+    # Format 'start' and 'end' columns into the desired string format
+    calendar_data['start'] = calendar_data['start'].dt.strftime('%Y-%m-%d %H:%M:%S')
+    calendar_data['end']   = calendar_data['end'].dt.strftime('%Y-%m-%d %H:%M:%S')
     
+    calendar_data['start'] = pd.to_datetime(calendar_data['start'])
+    calendar_data['end']   = pd.to_datetime(calendar_data['end'])
+    # calendar_data['attendees'] = [ str(item) for item in calendar_data['attendees'] ]
+    # weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    # calendar_data['weekday'] =[ weekdays[pd.to_datetime(calendar_data["start"][i], format='%Y-%m-%d %H:%M:%S').weekday()] for i in range(len(calendar_data['start']))]
     
-    
-def get_prompt(question):
-    
-    text = f"""{question}
-    """
-    
-    PROMPT = f"""You are provided a Pandas dataframe named calendar_data, columns = [ID, status, summary, start, end , duration, attendees]. DataFrame calendar_data includes all you calenders. 
-    Your task is generate python function to query this dataframe and answer the question. Output a python code block without any prefix instructionn and explaination. 
-
-    The input have following columns:
-    - ID: meeting ID;
-    - status: meeting status, including three status: confirmed, tentative and cancelled;
-    - summary: meeting or event topic;
-    - start: the start date of meeting, date format: YYYY-MM-DD hh:mm:ss.fff-zz:xx. for example "2024-02-05 12:00:00-00:00";
-    - end: the start date of meeting, date format: YYYY-MM-DD hh:mm:ss.fff-zz:xx, for example "2024-02-05 13:00:00-00:00";
-    - duration: meeting duration (second);
-    - attendees: people who attend the meeting delimited by the line terminator within 1 sentence.
-
-    Output is executable Python code by enclosing it in triple backticks:
-    ```python
-    <your code here>
-    ```
-
-    The only input of the code is dataframe - calendar_data, and the result is stored in answer.
-
-    For example, the output have the following format:
-    ```
-    import pandas as pd 
-    def query(calendar_data):
-        return calendar_data[0]
-    answer = query(calendar_data)
-    ```
-    
-    Recheck the python code has one input: calendar_data and one output: answer. 
-    Today's date is '2024-04-02 09:02:30', date format: %Y-%m-%d %H:%M:%S.
-
-    Question to be resolved: {text} 
-    """
-    
-    return PROMPT
-
-
-
-
-def get_code_completion(MODEL, PROMPT):
-    
-    client = OpenAI(
-        # This is the default and can be omitted
-        api_key=os.environ.get("OPENAI_API_KEY"),
-    )
-
-    chat_completion = client.chat.completions.create(
-        messages=[
-            {
-                "role": "user",
-                "content": PROMPT,
-            }
-        ],
-        model=MODEL,
-    )
-
-    # verify the output
-    return chat_completion.choices[0].message.content
-
-
-
-
-
+    return calendar_data
 
 
 def main():
-    # Add argparse and *karg
-    
-    DATA_PATH = "./data/"
-    MODEL = "gpt-4"
-    # MODEL = "gpt-3.5-turbo"
-    
-    print(DATA_PATH + "calendar_data.csv")
-    
-    result = {'success': 0, 'wrong_answer': 0, 'error': 0}
-    generated_code_analysis = {'question': '', 
-                               'python_with_code': '',
-                               'answer': ''
-                               }
-    
-    # run()
-    # print('END')
-    
-    calendar_data = get_calendar_data(DATA_PATH=DATA_PATH)
-    queston_answer_pairs = get_question(DATA_PATH=DATA_PATH)
-    
-    ground_true = []
-    
-    for i in range(3):
-        # print(f"""question index {i} \n""")
-        print(f"""Question: {queston_answer_pairs[i]['question']}\n True answer: {queston_answer_pairs[i]['answer']}""")
+    df_as_dicts = [
+        {'ID': 'd119c9af-4d0c-4d08-a1b6-344d02557345', 'status': 'confirmed', 'summary': 'Planning meeting', 'start': Timestamp('2023-10-02 09:00:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-02 10:00:00-0700', tz='America/Los_Angeles'), 'duration': 3600.0, 'attendees': 'janesmith@example.com(needsAction)\njoshrock@example.com(needsAction)\nrichardbaker@example.com(needsAction)'},
+        {'ID': 'a115b615-fd92-4397-865c-ddd367b8d3bd', 'status': 'confirmed', 'summary': 'Strategy review', 'start': Timestamp('2023-10-02 10:00:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-02 12:00:00-0700', tz='America/Los_Angeles'), 'duration': 7200.0, 'attendees': 'janesmith@example.com(needsAction)\nleonardhill@example.com(needsAction)\nrichardx@example.com(needsAction)\nrichardbaker@example.com(needsAction)'},
+        {'ID': '4b3aae2a-193d-4fc4-957e-30fb429abe10', 'status': 'confirmed', 'summary': 'Lunch', 'start': Timestamp('2023-10-02 12:00:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-02 13:00:00-0700', tz='America/Los_Angeles'), 'duration': 3600.0, 'attendees': ''},
+        {'ID': '79d54031-f8e9-4492-80bd-4fe34778e102', 'status': 'confirmed', 'summary': 'Manager 1 on 1', 'start': Timestamp('2023-10-02 13:30:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-02 14:00:00-0700', tz='America/Los_Angeles'), 'duration': 1800.0, 'attendees': 'richardx@example.com(needsAction)\nrichardbaker@example.com(needsAction)'},
+        {'ID': '43872aa1-2904-4e6e-88a7-2d4a7ed62bb9', 'status': 'confirmed', 'summary': 'Interview with candidate: John', 'start': Timestamp('2023-10-02 14:00:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-02 15:00:00-0700', tz='America/Los_Angeles'), 'duration': 3600.0, 'attendees': 'john@externalcompany.com(needsAction)\nrichardbaker@example.com(needsAction)'},
+        {'ID': '64de7fcc-448d-4445-8753-568eddfc47c1', 'status': 'confirmed', 'summary': 'Recruitment course', 'start': Timestamp('2023-10-02 16:00:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-02 17:30:00-0700', tz='America/Los_Angeles'), 'duration': 5400.0, 'attendees': 'hillary@recruitmentcourse.com(needsAction)\njanesmith@example.com(needsAction)\nrichardbaker@example.com(needsAction)\nterryterrence@example.com(needsAction)'},
+        {'ID': 'b1a98166-7701-4f5f-82d0-ce9d4e3d1aa5', 'status': 'confirmed', 'summary': 'Interview with candidate: Sally', 'start': Timestamp('2023-10-03 09:30:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-03 10:00:00-0700', tz='America/Los_Angeles'), 'duration': 1800.0, 'attendees': 'sally@externalcompany.com(needsAction)\nrichardbaker@example.com(needsAction)'},
+        {'ID': '5690101a-5a43-47ca-be3e-545f6ae13bc3', 'status': 'confirmed', 'summary': 'Interview with candidate: Brent', 'start': Timestamp('2023-10-03 10:00:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-03 10:30:00-0700', tz='America/Los_Angeles'), 'duration': 1800.0, 'attendees': 'brent@externalcompany.com(needsAction)\nrichardbaker@example.com(needsAction)'},
+        {'ID': '833cc6ef-3ec8-4500-ba05-b7dc5a423f7a', 'status': 'confirmed', 'summary': 'Interview with candidate: Bob', 'start': Timestamp('2023-10-03 10:30:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-03 11:30:00-0700', tz='America/Los_Angeles'), 'duration': 3600.0, 'attendees': 'bob@externalcompany.com(needsAction)\nrichardbaker@example.com(needsAction)'},
+        {'ID': '516ec6dc-15a4-452e-93d2-c8050bb5439e', 'status': 'confirmed', 'summary': 'Lunch and learn: ethical recruiting', 'start': Timestamp('2023-10-03 12:00:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-03 13:00:00-0700', tz='America/Los_Angeles'), 'duration': 3600.0, 'attendees': 'janesmith@example.com(needsAction)\nkensmith@example.com(needsAction)\nrichardbaker@example.com(needsAction)'},
+        {'ID': '048df1ab-52f5-42d3-8c08-fd4665e83265', 'status': 'confirmed', 'summary': 'Interview with candidate: Alice', 'start': Timestamp('2023-10-03 13:00:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-03 13:30:00-0700', tz='America/Los_Angeles'), 'duration': 1800.0, 'attendees': 'alice@externalcompany.com(needsAction)\njanesmith@example.com(needsAction)\nrichardbaker@example.com(needsAction)'},
+        {'ID': 'b9168d58-59a2-4fb1-b7d3-e364a3ab9dec', 'status': 'confirmed', 'summary': 'Interview with candidate: Jane', 'start': Timestamp('2023-10-03 13:30:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-03 14:00:00-0700', tz='America/Los_Angeles'), 'duration': 1800.0, 'attendees': 'jane@externalcompany.com(needsAction)\nrichardbaker@example.com(needsAction)'},
+        {'ID': 'ffec807a-c51b-43bb-b9a8-f3bf31303dfb', 'status': 'confirmed', 'summary': 'Job fair: bob hill university', 'start': Timestamp('2023-10-03 14:30:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-03 16:00:00-0700', tz='America/Los_Angeles'), 'duration': 5400.0, 'attendees': ''},
+        {'ID': 'e3e5aa3b-5646-41db-a9f0-6563fbd780ca', 'status': 'confirmed', 'summary': 'Recruitment analytics review', 'start': Timestamp('2023-10-03 16:30:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-03 17:00:00-0700', tz='America/Los_Angeles'), 'duration': 1800.0, 'attendees': 'janesmith@example.com(needsAction)\nrichardbaker@example.com(needsAction)'},
+        {'ID': '2ee10fc7-88ef-4a3e-ad29-b0d4f52f355b', 'status': 'confirmed', 'summary': 'Online candidate search', 'start': Timestamp('2023-10-04 09:00:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-04 11:00:00-0700', tz='America/Los_Angeles'), 'duration': 7200.0, 'attendees': ''},
+        {'ID': '5e5a1235-b1a4-449a-b2bf-a6604fa880e2', 'status': 'confirmed', 'summary': 'Interview with candidate: Stacy', 'start': Timestamp('2023-10-04 11:30:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-04 12:30:00-0700', tz='America/Los_Angeles'), 'duration': 3600.0, 'attendees': 'richardbaker@example.com(needsAction)\nstacy@externalcompany.com(needsAction)'},
+        {'ID': '27215f76-ab8c-47c8-986f-fb92965e75c5', 'status': 'confirmed', 'summary': 'Lunch', 'start': Timestamp('2023-10-04 12:30:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-04 13:30:00-0700', tz='America/Los_Angeles'), 'duration': 3600.0, 'attendees': ''},
+        {'ID': '39c217df-8138-4a9e-b219-f1af2574e738', 'status': 'confirmed', 'summary': 'Online candidate search', 'start': Timestamp('2023-10-04 14:00:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-04 16:00:00-0700', tz='America/Los_Angeles'), 'duration': 7200.0, 'attendees': ''},
+        {'ID': 'bde5030b-698d-4378-abed-dd07a9621457', 'status': 'confirmed', 'summary': 'Job fair: alice smith university', 'start': Timestamp('2023-10-04 16:15:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-04 18:00:00-0700', tz='America/Los_Angeles'), 'duration': 6300.0, 'attendees': ''},
+        {'ID': 'ee02de3c-502a-436f-9eda-7672570a80e3', 'status': 'confirmed', 'summary': 'Interview with candidate: Lenny', 'start': Timestamp('2023-10-05 09:30:00-0700', tz='America/Los_Angeles'), 'end': Timestamp('2023-10-05 10:00:00-0700', tz='America/Los_Angeles'), 'duration': 1800.0, 'attendees': 'richardbaker@example.com(needsAction)\nlenny@externalcompany.com(needsAction)'}
+    ]
         
-        PROMPT = get_prompt(queston_answer_pairs[i]['question'])
-        
-        question = queston_answer_pairs[i]['question']
-        ground_true = (queston_answer_pairs[i]['answer'])
-        
-        llm_reply_with_code = get_code_completion(MODEL, PROMPT)
-        
-        # extract code from the output of LLM
-        _python_code_re_pattern = "```python\n(.*?)```"
-        llm_reply_without_code = re.sub(
-                    _python_code_re_pattern, "", llm_reply_with_code, flags=re.DOTALL
-                    )
-        python_code_list = re.findall(_python_code_re_pattern, llm_reply_with_code, re.DOTALL)
-    
-        print(f"""Thegenerated code is: \n {python_code_list[0]}""")
+    calendar_data = DataFrame(df_as_dicts)  
+    calendar_data = convert_date(calendar_data)
+    print(calendar_data)
 
-        # answer = 1
-        exec_compiled_code = compile(python_code_list[0], '<string>', 'exec')
-        # exec(exec_compiled_code)
-
-        try:
-            Vars = {}
-            exec(exec_compiled_code, {'calendar_data': calendar_data}, Vars)
-            answer = Vars.get('answer')
-            print(f"""The generated answer is {answer}""")
-        except Exception as E:
-            print(E)
-            result['error'] += 1
-            pass
-        else:
-            print(f"""generated answer: {answer}""")
-            if ground_true == answer:
-                result['success'] += 1
-                print("success")
-            else:   
-                result['wrong_answer'] += 1
-                print("wrong answer")
+    def query_dataframe(filtered_calendar_data):
+        # Step 1: Filter out cancelled meetings
+        active_meetings = filtered_calendar_data[filtered_calendar_data['status'] != 'cancelled']
         
+        # Step 2: Extract hour of the day from start times
+        active_meetings['start_hour'] = active_meetings['start'].dt.hour
         
+        # Step 3: Count meetings per hour
+        meetings_per_hour = active_meetings['start_hour'].value_counts().sort_index()
         
-    # result = json.dumps(result)
-    print(result)
-        # save the code and result into .json 
-
-    # result = {'success': 0, 'wrong_answer': 0, 'error': 0}
-    # generated_code_analysis = {'question': '', 
-    #                            'python_with_code': '',
-    #                            'answer': ''
-    #                            }
+        # Step 4: Identify the hour with the maximum number of meetings
+        max_meetings_hour = meetings_per_hour.idxmax()
+        
+        # Retrieve count for the hour with the most meetings
+        max_count = meetings_per_hour[max_meetings_hour]
+        
+        # Step 5: Return a DataFrame with the result
+        result = pd.DataFrame({
+            'Hour of Day': [max_meetings_hour],
+            'Number of Meetings': [max_count]
+        })
+        
+        return result
 
 
-        
+    walk_slots = query_dataframe(calendar_data)
+    print(walk_slots)
+    print("End")
+   
+   
+   
+   
+   
+   
         
 
 
