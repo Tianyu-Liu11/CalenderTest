@@ -22,3 +22,9 @@ Directory: CalendarTest
 ## Performance evaluation
 
 - pass@1 accuracy
+
+## Note on this project
+- Calendar agent - Agenda_filtration()
+https://www.notion.so/ninjatech-ai/Calendar-agent-Agenda_filtration-69b4e410f24b4f9f968df8fd3ab94f2a?pvs=4
+- Summary agent_filtration()
+https://www.notion.so/ninjatech-ai/Summary-agent_filtration-92913d98f727407bb265bf173ffe1ab1?pvs=4
